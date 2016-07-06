@@ -12,7 +12,6 @@ import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Shopping;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnAddShopping;
 
     public static List<Shopping> shoppingList = new ArrayList<>();
 
@@ -22,19 +21,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 /*        ((Button)findViewById(R.id.btnAddShopping)).setOnClickListener(
-                v->((EditText)findViewById(R.id.txtShoppingList)).setText(
-                        ((EditText)findViewById(R.id.txtProduct)).getText().toString() + "/" + ((EditText)findViewById(R.id.txtShop)).getText().toString()
-                )
+                v->{
+                    EditText res = (EditText)findViewById(R.id.txtShoppingList);
+                    String pre = "";
+                    if (!res.getText().toString().isEmpty()) pre = "\n";
+                    res.append(
+                            pre + ((EditText)findViewById(R.id.txtProduct)).getText().toString() + "/" + ((EditText)findViewById(R.id.txtShop)).getText().toString()
+                    );
+                }
         );*/
 
-
-        MainActivityOnClickListner l = new MainActivityOnClickListner(this);
-
-        btnAddShopping = (Button)findViewById(R.id.btnAddShopping);
-
-        btnAddShopping.setOnClickListener(l);
-
-
+        ((Button)findViewById(R.id.btnAddShopping)).setOnClickListener(new MainActivityOnClickListner(this));
 
     }
 }
