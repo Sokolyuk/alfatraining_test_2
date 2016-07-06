@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Einkaufsliste</string>
+    <string name="txtProductHint">Produktnamen eingeben</string>
+    <string name="txtShopHint">Einkausmarktnamen eingeben</string>
+    <string name="btnAddShoppingText">Einkauf auf die Einkaufsliste setzen</string>
+    <string name="txtProductHint1">Einkaufsmarkt eingeben</string>
+</resources>
