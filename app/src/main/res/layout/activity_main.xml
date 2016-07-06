@@ -31,11 +31,36 @@
                 android:id="@+id/txtShop"
                 android:hint="@string/txtShopHint" />
 
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnAddShoppingText"
+                    android:id="@+id/btnAddShopping"
+                    android:textSize="11dp"
+                    android:layout_gravity="left" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/btnLoeschenText"
+                    android:id="@+id/btnClearShopping"
+                    android:layout_gravity="right"
+                    android:textColor="#8b2020" />
+
+            </LinearLayout>
+
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/btnAddShoppingText"
-                android:id="@+id/btnAddShopping"/>
+                android:text="@string/btnSaveText"
+                android:id="@+id/btnSaveShopping"/>
+
 
             <EditText
                 android:layout_width="match_parent"

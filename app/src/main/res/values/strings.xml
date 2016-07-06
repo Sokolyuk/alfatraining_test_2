@@ -3,5 +3,7 @@
     <string name="txtProductHint">Produktnamen eingeben</string>
     <string name="txtShopHint">Einkausmarktnamen eingeben</string>
     <string name="btnAddShoppingText">Einkauf auf die Einkaufsliste setzen</string>
+    <string name="btnLoeschenText">Leeren</string>
+    <string name="btnSaveText">Speichern</string>
     <string name="txtProductHint1">Einkaufsmarkt eingeben</string>
 </resources>
