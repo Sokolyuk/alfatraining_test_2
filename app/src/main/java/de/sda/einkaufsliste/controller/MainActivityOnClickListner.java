@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import de.sda.einkaufsliste.MainActivity;
 import de.sda.einkaufsliste.R;
@@ -43,9 +45,47 @@ public class MainActivityOnClickListner implements View.OnClickListener {
             case R.id.btnSaveShopping:
                 saveShopping();
                 break;
+            case R.id.btnLoadShopping:
+                loadShopping();
+                break;
             default:
                 mainActivity.showMess("Unexpected caller. Oops.");
         }
+    }
+
+    private void loadShopping() {
+        try{
+            try(FileInputStream fi = mainActivity.openFileInput("shoppings.txt");) {
+                byte[] b = new byte[100];
+                String res = "";
+                int n = 0;
+                while ((n = fi.read(b)) != -1) {
+                    res += new String(b, 0, n);
+                }
+
+                _clearShopping();
+
+                int i = 0;
+                if (!res.isEmpty()) {
+                    for(String s: res.substring(1, res.length() - 1).split(",")){
+                        String[] d = s.split("->");
+                        Shopping shopping = new Shopping(d[0], d[1]);
+                        MainActivity.shoppingList.add(shopping);
+                        i++;
+                    }
+                }
+
+                renderArr();
+
+                mainActivity.showMess(String.format("Loaded %d rows.", i));
+
+            }
+
+        }catch(Exception e){
+            mainActivity.showMess("Error occured: " + e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     private void saveShopping() {
@@ -57,26 +97,19 @@ public class MainActivityOnClickListner implements View.OnClickListener {
             }
             mainActivity.showMess("Saved.");
 
-            try(FileInputStream fi = mainActivity.openFileInput("shoppings.txt");) {
-                byte[] b = new byte[100];
-                String res = "";
-                int n = 0;
-                while ((n = fi.read(b)) != -1) {
-                    res += new String(b, 0, n);
-                }
-                mainActivity.showMess(res);
-                System.out.println(res);
-            }
-
         }catch(Exception e){
             mainActivity.showMess("Error occured: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    private void clearShopping() {
+    private void _clearShopping() {
         MainActivity.shoppingList.clear();
         txtShoppingList.setText("");
+    }
+
+    private void clearShopping() {
+        _clearShopping();
         mainActivity.showMess("Cleared");
     }
 
@@ -90,12 +123,7 @@ public class MainActivityOnClickListner implements View.OnClickListener {
             Shopping shopping = new Shopping(productName, shopName);
             MainActivity.shoppingList.add(shopping);
 
-            String output = "";
-
-            for (Shopping s: MainActivity.shoppingList) {
-                output += "\n" + s.toString();
-            }
-            txtShoppingList.setText(output);
+            renderArr();
 
             txtProduct.setText("");
             txtShop.setText("");
@@ -106,6 +134,14 @@ public class MainActivityOnClickListner implements View.OnClickListener {
         }
         toast.setGravity(Gravity.TOP| Gravity.CENTER, 10, 0);
         toast.show();
+    }
+
+    protected void renderArr(){
+        String output = "";
+        for (Shopping s: MainActivity.shoppingList) {
+            output += "\n" + s.toString();
+        }
+        txtShoppingList.setText(output);
     }
 
 }

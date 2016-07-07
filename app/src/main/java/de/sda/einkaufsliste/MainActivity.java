@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
         });*/
 
         ((Button)findViewById(R.id.btnClearShopping)).setOnClickListener(l);
-
         ((Button)findViewById(R.id.btnSaveShopping)).setOnClickListener(l);
+        ((Button)findViewById(R.id.btnLoadShopping)).setOnClickListener(l);
 
         //SharedPreferences a;
 

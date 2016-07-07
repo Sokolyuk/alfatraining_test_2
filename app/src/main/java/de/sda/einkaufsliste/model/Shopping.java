@@ -21,8 +21,8 @@ public class Shopping {
      * @param shopName
      */
     public Shopping(String productName, String shopName) {
-        this.productName = productName;
-        this.shopName = shopName;
+        this.productName = productName.trim();
+        this.shopName = shopName.trim();
     }
 
     public String getProductName() {
