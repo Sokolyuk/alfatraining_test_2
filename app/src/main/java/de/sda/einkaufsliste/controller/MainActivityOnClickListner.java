@@ -75,7 +75,7 @@ public class MainActivityOnClickListner implements View.OnClickListener {
                     }
                 }
 
-                renderArr();
+                _renderArr();
 
                 mainActivity.showMess(String.format("Loaded %d rows.", i));
 
@@ -123,7 +123,7 @@ public class MainActivityOnClickListner implements View.OnClickListener {
             Shopping shopping = new Shopping(productName, shopName);
             MainActivity.shoppingList.add(shopping);
 
-            renderArr();
+            _renderArr();
 
             txtProduct.setText("");
             txtShop.setText("");
@@ -136,7 +136,7 @@ public class MainActivityOnClickListner implements View.OnClickListener {
         toast.show();
     }
 
-    protected void renderArr(){
+    protected void _renderArr(){
         String output = "";
         for (Shopping s: MainActivity.shoppingList) {
             output += "\n" + s.toString();
