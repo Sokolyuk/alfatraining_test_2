@@ -17,8 +17,8 @@ import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Shopping;
 
 public class MainActivity extends AppCompatActivity {
-
     public static List<Shopping> shoppingList = new ArrayList<>();
+    public static ShoppingOpenHelper shoppingOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,19 +28,20 @@ public class MainActivity extends AppCompatActivity {
         MainActivityOnClickListner l = new MainActivityOnClickListner(this);
 
         ((Button)findViewById(R.id.btnAddShopping)).setOnClickListener(l);
-
-/*        ((Button)findViewById(R.id.btnClear)).setOnClickListener(e->{
-            shoppingList.clear();
-            ((EditText)findViewById(R.id.txtShoppingList)).setText("");
-            showMess("Cleared");
-        });*/
-
         ((Button)findViewById(R.id.btnClearShopping)).setOnClickListener(l);
         ((Button)findViewById(R.id.btnSaveShopping)).setOnClickListener(l);
+        ((Button)findViewById(R.id.btnSaveDBShopping)).setOnClickListener(l);
         ((Button)findViewById(R.id.btnLoadShopping)).setOnClickListener(l);
+        ((Button)findViewById(R.id.btnLoadDBShopping)).setOnClickListener(l);
+        ((Button)findViewById(R.id.btnShow)).setOnClickListener(l);
 
-        //SharedPreferences a;
+        shoppingOpenHelper = new ShoppingOpenHelper(this);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        shoppingOpenHelper.close();
     }
 
     public void showMess(String mess) {

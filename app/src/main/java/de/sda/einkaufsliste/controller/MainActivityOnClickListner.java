@@ -1,5 +1,6 @@
 package de.sda.einkaufsliste.controller;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -8,9 +9,11 @@ import android.widget.Toast;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import de.sda.einkaufsliste.ListViewActivity;
 import de.sda.einkaufsliste.MainActivity;
 import de.sda.einkaufsliste.R;
 import de.sda.einkaufsliste.model.Shopping;
@@ -45,11 +48,53 @@ public class MainActivityOnClickListner implements View.OnClickListener {
             case R.id.btnSaveShopping:
                 saveShopping();
                 break;
+            case R.id.btnSaveDBShopping:
+                saveDBShopping();
+                break;
             case R.id.btnLoadShopping:
                 loadShopping();
                 break;
+            case R.id.btnLoadDBShopping:
+                loadDBShopping();
+                break;
+            case R.id.btnShow:
+                showShopping();
+                break;
             default:
                 mainActivity.showMess("Unexpected caller. Oops.");
+        }
+    }
+
+    private void showShopping() {
+        Intent intentListViewActivity = new Intent(mainActivity, ListViewActivity.class);
+        mainActivity.startActivity(intentListViewActivity);
+    }
+
+    private void loadDBShopping() {
+        try{
+            List<Shopping> shoppings = MainActivity.shoppingOpenHelper.select();
+
+            MainActivity.shoppingList.clear();
+
+            for(Shopping s: shoppings){
+                MainActivity.shoppingList.add(new Shopping(s.getProductName(), s.getShopName()));
+            }
+
+            _renderArr();
+
+        }catch(Exception e){
+            Log.e(getClass().toString(), e.getMessage());
+        }
+    }
+
+    private void saveDBShopping() {
+        try{
+
+            for(Shopping s: MainActivity.shoppingList) {
+                MainActivity.shoppingOpenHelper.insert(s.getProductName(), s.getShopName());
+            }
+        }catch(Exception e){
+            Log.e("Err", e.getMessage());
         }
     }
 
