@@ -73,7 +73,6 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="@string/btnSaveDBText"
-                   android:layout_gravity="right"
                    android:id="@+id/btnSaveDBShopping"
                    android:layout_weight="0.24"
                    android:textColor="#1c1e5b" />
@@ -98,9 +97,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/btnLoadDBText"
-                    android:layout_gravity="right"
                     android:id="@+id/btnLoadDBShopping"
                     android:layout_weight="0.37"
+                    android:layout_alignParentRight="true"
                     android:textColor="#1c1e5b" />
 
             </LinearLayout>
