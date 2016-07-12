@@ -27,7 +27,7 @@ public class MainActivityOnClickListner {
             MainActivity.shoppingList.clear();
 
             for(Shopping s: shoppings){
-                MainActivity.shoppingList.add(new Shopping(s.getProductName(), s.getShopName()));
+                MainActivity.shoppingList.add(new Shopping(s.getProductName(), s.getShopName(), false));
             }
 
             _render(mainActivity);
