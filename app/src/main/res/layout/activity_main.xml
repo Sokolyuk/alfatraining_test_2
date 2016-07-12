@@ -8,16 +8,18 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="de.sda.einkaufsliste.MainActivity">
+    tools:context="de.sda.einkaufsliste.MainActivity"
+    android:background="@color/primary_material_light">
 
-    <ScrollView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="287dp"
+            android:layout_height="wrap_content">
 
             <EditText
                 android:layout_width="match_parent"
@@ -30,96 +32,19 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/txtShop"
                 android:hint="@string/txtShopHint" />
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnAddShoppingText"
-                    android:id="@+id/btnAddShopping"
-                    android:textSize="11dp"
-                    android:layout_gravity="left" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnLoeschenText"
-                    android:id="@+id/btnClearShopping"
-                    android:layout_gravity="right"
-                    android:textColor="#8b2020" />
-
-            </LinearLayout>
-
-           <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-               android:weightSum="1">
-
-               <Button
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/btnSaveText"
-                   android:id="@+id/btnSaveShopping"
-                   android:layout_weight="0.53" />
-
-               <Button
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="@string/btnSaveDBText"
-                   android:id="@+id/btnSaveDBShopping"
-                   android:layout_weight="0.24"
-                   android:textColor="#1c1e5b" />
-
-           </LinearLayout>
-
-            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="1">
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnLoadText"
-                    android:id="@+id/btnLoadShopping"
-                    android:layout_weight="0.46" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/btnLoadDBText"
-                    android:id="@+id/btnLoadDBShopping"
-                    android:layout_weight="0.37"
-                    android:layout_alignParentRight="true"
-                    android:textColor="#1c1e5b" />
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/btnShow"
-                android:layout_gravity="right"
-                android:id="@+id/btnShow"
-                android:textColor="#1c1e5b" />
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/txtShoppingList"
-                android:inputType="textMultiLine"
-                android:minLines="15" />
         </LinearLayout>
-    </ScrollView>
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/btnAddShopping"
+            android:src="@android:drawable/ic_menu_add" />
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listView" />
 
 
 </LinearLayout>

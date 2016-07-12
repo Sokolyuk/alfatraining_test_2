@@ -5,9 +5,7 @@
     <string name="btnAddShoppingText">Einkauf auf die Einkaufsliste setzen</string>
     <string name="btnLoeschenText">Leeren</string>
     <string name="btnSaveText">Speichern</string>
-    <string name="btnSaveDBText">Speichern DB</string>
     <string name="btnLoadText">Load</string>
-    <string name="btnLoadDBText">Load DB</string>
     <string name="btnShow">Show</string>
     <string name="txtProductHint1">Einkaufsmarkt eingeben</string>
 </resources>

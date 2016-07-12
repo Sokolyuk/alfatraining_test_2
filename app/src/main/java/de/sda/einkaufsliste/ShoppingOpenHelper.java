@@ -27,7 +27,7 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table shopping(id integer primary key autoincrement, productname text, shopname text);");
+        db.execSQL("create table shopping(id integer primary key autoincrement, productname text, shopname text, isdone integer);");
     }
 
     /**
@@ -46,17 +46,15 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
      * Speichert einen Datensatz in die Tabelle person.
      * Siese Methode nutzt die SQLiteDatabase Klasse,
      * und schreibt in die Felder fuer den Vornamen und den Nachnamen.
-     * @param productName
-     * @param shopName
+     * @param s
      * @return Did Der Primaerschluessel der eingefuegten Zeile.
      */
-    public long insert(String productName, String shopName) {
-        //getWritableDatabase()
-        //getReadableDatabase()
+    public long insert(Shopping s) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put("productname", productName);
-        cv.put("shopname", shopName);
+        cv.put("productname", s.getProductName());
+        cv.put("shopname", s.getShopName());
+        cv.put("isdone", s.isDone()?1:0);
         return db.insert("shopping", null, cv);
     }
 
@@ -70,7 +68,8 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
                         long id = cur.getLong(cur.getColumnIndex("id"));
                         String productName = cur.getString(cur.getColumnIndex("productname"));
                         String shopName = cur.getString(cur.getColumnIndex("shopname"));
-                        res.add(new Shopping(productName, shopName));
+                        boolean isDone = cur.getInt(cur.getColumnIndex("isdone")) > 0;
+                        res.add(new Shopping(productName, shopName, isDone));
                     }
                 }
             }

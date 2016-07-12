@@ -5,13 +5,10 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import de.sda.einkaufsliste.ListViewActivity;
 import de.sda.einkaufsliste.MainActivity;
@@ -21,68 +18,9 @@ import de.sda.einkaufsliste.model.Shopping;
 /**
  * Created by SDA on 05.07.2016.
  */
-public class MainActivityOnClickListner implements View.OnClickListener {
-    private MainActivity mainActivity;
-    private EditText txtProduct;
-    private EditText txtShop;
-    private EditText txtShoppingList;
+public class MainActivityOnClickListner {
 
-    public MainActivityOnClickListner(MainActivity mainActivity){
-        this.mainActivity = mainActivity;
-
-        txtProduct = (EditText)mainActivity.findViewById(R.id.txtProduct);
-        txtShop = (EditText)mainActivity.findViewById(R.id.txtShop);
-        txtShoppingList = (EditText)mainActivity.findViewById(R.id.txtShoppingList);
-    }
-
-
-    private boolean checkUserInput(){
-        boolean valid = true;
-//        if (txtProduct.isInEditMode() || txtShop.is)
-        return valid;
-    }
-
-    @Override
-    public void onClick(View v) {
-
-//mainActivity = (MainActivity) v.getContext();
-
-
-
-
-        switch(v.getId()) {
-            case R.id.btnAddShopping:
-                addShopping();
-                break;
-            case R.id.btnClearShopping:
-                clearShopping();
-                break;
-            case R.id.btnSaveShopping:
-                saveShopping();
-                break;
-            case R.id.btnSaveDBShopping:
-                saveDBShopping();
-                break;
-            case R.id.btnLoadShopping:
-                loadShopping();
-                break;
-            case R.id.btnLoadDBShopping:
-                loadDBShopping();
-                break;
-            case R.id.btnShow:
-                showShopping();
-                break;
-            default:
-                mainActivity.showMess("Unexpected caller. Oops.");
-        }
-    }
-
-    private void showShopping() {
-        Intent intentListViewActivity = new Intent(mainActivity, ListViewActivity.class);
-        mainActivity.startActivity(intentListViewActivity);
-    }
-
-    private void loadDBShopping() {
+    public static void load(MainActivity mainActivity) {
         try{
             List<Shopping> shoppings = MainActivity.shoppingOpenHelper.select();
 
@@ -92,114 +30,48 @@ public class MainActivityOnClickListner implements View.OnClickListener {
                 MainActivity.shoppingList.add(new Shopping(s.getProductName(), s.getShopName()));
             }
 
-            _renderArr();
+            _render(mainActivity);
 
         }catch(Exception e){
-            Log.e(getClass().toString(), e.getMessage());
+            Log.e("load", e.getMessage());
         }
     }
 
-    private void saveDBShopping() {
+    public static boolean add(MainActivity mainActivity) {
         try{
+            EditText product = (EditText)mainActivity.findViewById(R.id.txtProduct);
+            EditText shop = (EditText)mainActivity.findViewById(R.id.txtShop);
 
-            for(Shopping s: MainActivity.shoppingList) {
-                MainActivity.shoppingOpenHelper.insert(s.getProductName(), s.getShopName());
-            }
-        }catch(Exception e){
-            Log.e("Err", e.getMessage());
-        }
-    }
+            String productName = product.getEditableText().toString();
+            String shopName = shop.getEditableText().toString();
 
-    private void loadShopping() {
-        try{
-            try(FileInputStream fi = mainActivity.openFileInput("shoppings.txt");) {
-                byte[] b = new byte[100];
-                String res = "";
-                int n = 0;
-                while ((n = fi.read(b)) != -1) {
-                    res += new String(b, 0, n);
-                }
+            if (!productName.isEmpty() && !shopName.isEmpty()) {
+                Shopping s = new Shopping(productName, shopName, false);
 
-                _clearShopping();
+                MainActivity.shoppingOpenHelper.insert(s);
 
-                int i = 0;
-                if (!res.isEmpty()) {
-                    for(String s: res.substring(1, res.length() - 1).split(",")){
-                        String[] d = s.split("->");
-                        Shopping shopping = new Shopping(d[0], d[1]);
-                        MainActivity.shoppingList.add(shopping);
-                        i++;
-                    }
-                }
+                mainActivity.shoppingList.add(s);
 
-                _renderArr();
+                _render(mainActivity);
 
-                mainActivity.showMess(String.format("Loaded %d rows.", i));
+                product.setText("");
+                shop.setText("");
 
+            } else {
+                mainActivity.showMess("Bitte alle Felder ausfuellen");
             }
 
+            return true;
         }catch(Exception e){
-            mainActivity.showMess("Error occured: " + e.getMessage());
-            e.printStackTrace();
+            mainActivity.showMess(e.getMessage());
+            Log.e("saveShopping", e.getMessage());
+            return false;
         }
 
     }
 
-    private void saveShopping() {
-        try{
-            try(FileOutputStream fos = mainActivity.openFileOutput("shoppings.txt", MainActivity.MODE_ENABLE_WRITE_AHEAD_LOGGING);) {
-
-                fos.write(MainActivity.shoppingList.toString().getBytes());
-                fos.flush();
-            }
-            mainActivity.showMess("Saved.");
-
-        }catch(Exception e){
-            mainActivity.showMess("Error occured: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    private void _clearShopping() {
-        MainActivity.shoppingList.clear();
-        MainActivity.shoppingList.clear();
-        txtShoppingList.setText("");
-    }
-
-    private void clearShopping() {
-        _clearShopping();
-        mainActivity.showMess("Cleared");
-    }
-
-    protected void addShopping() {
-        String productName = txtProduct.getEditableText().toString();
-        String shopName = txtShop.getEditableText().toString();
-
-        Toast toast;
-
-        if (!productName.isEmpty() && !shopName.isEmpty()) {
-            Shopping shopping = new Shopping(productName, shopName);
-            MainActivity.shoppingList.add(shopping);
-
-            _renderArr();
-
-            txtProduct.setText("");
-            txtShop.setText("");
-            toast = Toast.makeText(mainActivity.getApplicationContext(), "Done", Toast.LENGTH_SHORT);
-            Log.i("Inf", "Done.");
-        } else {
-            toast = Toast.makeText(mainActivity.getApplicationContext(), "Bitte alle Felder ausfuellen", Toast.LENGTH_LONG);
-        }
-        toast.setGravity(Gravity.TOP| Gravity.CENTER, 10, 0);
-        toast.show();
-    }
-
-    protected void _renderArr(){
-        String output = "";
-        for (Shopping s: MainActivity.shoppingList) {
-            output += "\n" + s.toString();
-        }
-        txtShoppingList.setText(output);
+    protected static void _render(MainActivity mainActivity){
+        mainActivity.listViewAdaptor.notifyDataSetChanged();
     }
 
 }

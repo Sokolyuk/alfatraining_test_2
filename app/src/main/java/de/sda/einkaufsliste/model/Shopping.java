@@ -6,6 +6,7 @@ package de.sda.einkaufsliste.model;
 public class Shopping {
     private String productName;
     private String shopName;
+    private boolean isDone;
 
     /**
      * default constructor
@@ -20,9 +21,18 @@ public class Shopping {
      * @param productName
      * @param shopName
      */
-    public Shopping(String productName, String shopName) {
+    public Shopping(String productName, String shopName, boolean isDone) {
         this.productName = productName.trim();
         this.shopName = shopName.trim();
+        this.isDone = isDone;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
     }
 
     public String getProductName() {
@@ -45,4 +55,5 @@ public class Shopping {
     public String toString() {
         return productName + "->" + shopName;
     }
+
 }

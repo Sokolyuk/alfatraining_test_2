@@ -1,20 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:weightSum="1">
+    android:layout_height="wrap_content"
+    android:weightSum="1"
+    android:background="@color/primary_material_light">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="276dp"
+        android:layout_height="match_parent"
+        android:weightSum="1">
 
 
-    <TextView
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="11111111111111 11 11 1111 1111"
+            android:gravity="left"
+            android:id="@+id/idWare"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="111234 243234 234"
+            android:gravity="left"
+            android:id="@+id/idShop"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="111"
-        android:gravity="center_horizontal"
-        android:id="@+id/txtvShopping"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textStyle="bold"
-        android:background="#6bcaec" />
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imgNone"
+            android:src="@android:drawable/checkbox_off_background"
+            android:layout_marginRight="14dp" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imgDone"
+            android:src="@android:drawable/checkbox_on_background"
+            android:visibility="gone" />
+    </FrameLayout>
+
 
 </LinearLayout>

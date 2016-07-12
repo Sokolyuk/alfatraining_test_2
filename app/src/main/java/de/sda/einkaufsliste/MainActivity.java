@@ -7,7 +7,9 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
@@ -18,32 +20,33 @@ import de.sda.einkaufsliste.model.Shopping;
 public class MainActivity extends AppCompatActivity {
     public static List<Shopping> shoppingList = new ArrayList<>();
     public static ShoppingOpenHelper shoppingOpenHelper;
+    public static ListViewAdaptor listViewAdaptor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MainActivityOnClickListner l = new MainActivityOnClickListner(this);
+        ((ImageButton)findViewById(R.id.btnAddShopping)).setOnClickListener(v->MainActivityOnClickListner.add(MainActivity.this));
 
-        ((Button)findViewById(R.id.btnAddShopping)).setOnClickListener(l);
-        ((Button)findViewById(R.id.btnClearShopping)).setOnClickListener(l);
-        ((Button)findViewById(R.id.btnSaveShopping)).setOnClickListener(l);
-        ((Button)findViewById(R.id.btnSaveDBShopping)).setOnClickListener(l);
-        ((Button)findViewById(R.id.btnLoadShopping)).setOnClickListener(l);
-        ((Button)findViewById(R.id.btnLoadDBShopping)).setOnClickListener(l);
-        ((Button)findViewById(R.id.btnShow)).setOnClickListener(l);
+        listViewAdaptor = new ListViewAdaptor(this);
+        ListView listView = (ListView)findViewById(R.id.listView);
+        listView.setAdapter(listViewAdaptor);
 
-        shoppingOpenHelper = new ShoppingOpenHelper(this);
     }
 
     @Override
     protected void onResume() {
-
-Log.i("MyInf", "onResume");
-
         super.onResume();
+        shoppingOpenHelper = new ShoppingOpenHelper(this);
+        MainActivityOnClickListner.load(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         shoppingOpenHelper.close();
+        shoppingOpenHelper = null;
     }
 
     public void showMess(String mess) {
