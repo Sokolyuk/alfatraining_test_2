@@ -21,10 +21,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-Log.i("MyInf", "OnCreate");
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -60,25 +56,6 @@ Log.i("MyInf", "onResume");
         toast.setDuration(Toast.LENGTH_SHORT);
         toast.setView(layout);
         toast.show();
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-Log.i("MyInf", "onPause");
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.i("MyInf", "onRestart");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-Log.i("MyInf", "onDestroy");
     }
 
 }
