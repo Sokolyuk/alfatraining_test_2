@@ -35,8 +35,20 @@ public class MainActivityOnClickListner implements View.OnClickListener {
         txtShoppingList = (EditText)mainActivity.findViewById(R.id.txtShoppingList);
     }
 
+
+    private boolean checkUserInput(){
+        boolean valid = true;
+//        if (txtProduct.isInEditMode() || txtShop.is)
+        return valid;
+    }
+
     @Override
     public void onClick(View v) {
+
+//mainActivity = (MainActivity) v.getContext();
+
+
+
 
         switch(v.getId()) {
             case R.id.btnAddShopping:
@@ -149,6 +161,7 @@ public class MainActivityOnClickListner implements View.OnClickListener {
     }
 
     private void _clearShopping() {
+        MainActivity.shoppingList.clear();
         MainActivity.shoppingList.clear();
         txtShoppingList.setText("");
     }

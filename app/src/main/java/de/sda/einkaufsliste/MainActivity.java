@@ -2,6 +2,7 @@ package de.sda.einkaufsliste;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Shopping;
 
@@ -22,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+Log.i("MyInf", "OnCreate");
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
+Log.i("MyInf", "onResume");
+
         super.onResume();
         shoppingOpenHelper.close();
     }
@@ -55,4 +61,24 @@ public class MainActivity extends AppCompatActivity {
         toast.setView(layout);
         toast.show();
     }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+Log.i("MyInf", "onPause");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i("MyInf", "onRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+Log.i("MyInf", "onDestroy");
+    }
+
 }
