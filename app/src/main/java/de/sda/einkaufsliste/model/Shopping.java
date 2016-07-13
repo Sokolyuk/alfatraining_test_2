@@ -7,6 +7,7 @@ public class Shopping {
     private String productName;
     private String shopName;
     private boolean isDone;
+    private long id;
 
     /**
      * default constructor
@@ -21,7 +22,8 @@ public class Shopping {
      * @param productName
      * @param shopName
      */
-    public Shopping(String productName, String shopName, boolean isDone) {
+    public Shopping(long id, String productName, String shopName, boolean isDone) {
+        this.id = id;
         this.productName = productName.trim();
         this.shopName = shopName.trim();
         this.isDone = isDone;
@@ -56,4 +58,11 @@ public class Shopping {
         return productName + "->" + shopName;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

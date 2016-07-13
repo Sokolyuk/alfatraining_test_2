@@ -1,5 +1,6 @@
 package de.sda.einkaufsliste;
 
+import android.app.Activity;
 import android.content.Context;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Shopping;
 
 /**
@@ -16,7 +18,7 @@ import de.sda.einkaufsliste.model.Shopping;
  */
 public class ListViewAdaptor extends BaseAdapter {
     private LayoutInflater layoutInflater;
-    private Context context;
+    private final Context context;
 
     public ListViewAdaptor(Context context){
         this.context = context;
@@ -39,7 +41,7 @@ public class ListViewAdaptor extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = layoutInflater.inflate(R.layout.list_view_item_layout, parent, false);
         }
@@ -58,9 +60,15 @@ public class ListViewAdaptor extends BaseAdapter {
         }
 
         convertView.setOnClickListener(v->{
-
+            Shopping _s = (Shopping) getItem(position);
+            if(_s != null) _s.setDone(!_s.isDone());
+            MainActivityOnClickListner.update(v.getContext(), _s);
         });
 
+        convertView.setOnLongClickListener(v->{
+            ((Activity)context).openContextMenu(v);
+            return true;
+        });
 
         return convertView;
     }

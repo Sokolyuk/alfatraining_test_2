@@ -1,18 +1,15 @@
 package de.sda.einkaufsliste.controller;
 
+import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
 import java.util.List;
 
-import de.sda.einkaufsliste.ListViewActivity;
+import de.sda.einkaufsliste.EditActivity;
 import de.sda.einkaufsliste.MainActivity;
 import de.sda.einkaufsliste.R;
+import de.sda.einkaufsliste.ShoppingOpenHelper;
 import de.sda.einkaufsliste.model.Shopping;
 
 /**
@@ -27,7 +24,7 @@ public class MainActivityOnClickListner {
             MainActivity.shoppingList.clear();
 
             for(Shopping s: shoppings){
-                MainActivity.shoppingList.add(new Shopping(s.getProductName(), s.getShopName(), false));
+                MainActivity.shoppingList.add(new Shopping(s.getId(), s.getProductName(), s.getShopName(), s.isDone()));
             }
 
             _render(mainActivity);
@@ -46,9 +43,9 @@ public class MainActivityOnClickListner {
             String shopName = shop.getEditableText().toString();
 
             if (!productName.isEmpty() && !shopName.isEmpty()) {
-                Shopping s = new Shopping(productName, shopName, false);
+                Shopping s = new Shopping(-1, productName, shopName, false);
 
-                MainActivity.shoppingOpenHelper.insert(s);
+                s.setId(MainActivity.shoppingOpenHelper.insert(s));
 
                 mainActivity.shoppingList.add(s);
 
@@ -74,4 +71,26 @@ public class MainActivityOnClickListner {
         mainActivity.listViewAdaptor.notifyDataSetChanged();
     }
 
+    public static void edit(Context c, Shopping s) {
+        Intent i = new Intent(c, EditActivity.class);
+        i.putExtra("id", s.getId());
+        c.startActivity(i);
+    }
+
+    public static void update(Context c, Shopping s) {
+        try {
+            MainActivity.shoppingOpenHelper.update(s);
+            MainActivity.listViewAdaptor.notifyDataSetChanged();
+        }catch(Exception e) {
+            e.printStackTrace();
+            MainActivity.showMess(c, e.getMessage());
+        }
+    }
+
+    public static void delete(Shopping s) {
+        MainActivity.shoppingOpenHelper.delete(s);
+        MainActivity.shoppingList.remove(s);
+        MainActivity.listViewAdaptor.notifyDataSetInvalidated();
+
+    }
 }

@@ -69,7 +69,7 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
                         String productName = cur.getString(cur.getColumnIndex("productname"));
                         String shopName = cur.getString(cur.getColumnIndex("shopname"));
                         boolean isDone = cur.getInt(cur.getColumnIndex("isdone")) > 0;
-                        res.add(new Shopping(productName, shopName, isDone));
+                        res.add(new Shopping(id, productName, shopName, isDone));
                     }
                 }
             }
@@ -80,4 +80,19 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
         }
     }
 
+    public void update(Shopping s) throws Exception {
+        if (s.getId() < 1) throw new Exception("Id is unassigned");
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("productname", s.getProductName());
+        cv.put("shopname", s.getShopName());
+        cv.put("isdone", s.isDone()?1:0);
+        db.update("shopping", cv, "id="+s.getId(), null);
+    }
+
+    public void delete(Shopping s) {
+        if (s.getId() < 1) return;
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("shopping", "id="+s.getId(), null);
+    }
 }
