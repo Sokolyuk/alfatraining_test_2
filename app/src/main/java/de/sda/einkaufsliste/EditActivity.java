@@ -2,6 +2,8 @@ package de.sda.einkaufsliste;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -12,7 +14,8 @@ import de.sda.einkaufsliste.model.Shopping;
 /**
  * Created by Alfa on 13.07.2016.
  */
-public class EditActivity extends AppCompatActivity {
+public class EditActivity extends AppCompatActivity implements IThrRes {
+
     private EditText product;
     private EditText shop;
 
@@ -49,12 +52,22 @@ public class EditActivity extends AppCompatActivity {
         ((ImageButton)findViewById(R.id.btn_edt_AddShopping)).setOnClickListener(v->{
             _shopping.setProductName(product.getText().toString());
             _shopping.setShopName(shop.getText().toString());
-            MainActivityOnClickListner.update(this, _shopping);
-            MainActivity.listViewAdaptor.notifyDataSetChanged();
-            EditActivity.this.finish();
+            MainActivityOnClickListner.updateThr(this, this, _shopping);
+            ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
         });
 
     }
 
+    @Override
+    public void isDone() {
+        MainActivity.listViewAdaptor.notifyDataSetChanged();
+        EditActivity.this.finish();
+    }
+
+    @Override
+    public void isError(String mess) {
+        ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+        MainActivity.showMess(this, mess);
+    }
 
 }

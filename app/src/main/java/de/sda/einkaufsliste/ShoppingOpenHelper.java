@@ -26,7 +26,7 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
      * @param db
      */
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public synchronized void onCreate(SQLiteDatabase db) {
         db.execSQL("create table shopping(id integer primary key autoincrement, productname text, shopname text, isdone integer);");
     }
 
@@ -37,7 +37,7 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
      * @param i1
      */
     @Override
-    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+    public synchronized void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("drop table if exists shopping;");
         onCreate(db);
     }
@@ -49,16 +49,18 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
      * @param s
      * @return Did Der Primaerschluessel der eingefuegten Zeile.
      */
-    public long insert(Shopping s) {
+    public synchronized long insert(Shopping s) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("productname", s.getProductName());
         cv.put("shopname", s.getShopName());
         cv.put("isdone", s.isDone()?1:0);
-        return db.insert("shopping", null, cv);
+        long _id = db.insert("shopping", null, cv);
+        s.setId(_id);
+        return _id;
     }
 
-    public List<Shopping> select() {
+    public synchronized List<Shopping> select() {
         ArrayList<Shopping> res = new ArrayList<>();
         try{
             SQLiteDatabase d = getReadableDatabase();
@@ -80,7 +82,7 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void update(Shopping s) throws Exception {
+    public synchronized void update(Shopping s) throws Exception {
         if (s.getId() < 1) throw new Exception("Id is unassigned");
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -90,7 +92,7 @@ public class ShoppingOpenHelper extends SQLiteOpenHelper {
         db.update("shopping", cv, "id="+s.getId(), null);
     }
 
-    public void delete(Shopping s) {
+    public synchronized void delete(Shopping s) {
         if (s.getId() < 1) return;
         SQLiteDatabase db = getWritableDatabase();
         db.delete("shopping", "id="+s.getId(), null);

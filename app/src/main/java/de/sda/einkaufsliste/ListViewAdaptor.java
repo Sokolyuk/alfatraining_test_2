@@ -6,6 +6,7 @@ import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -62,7 +63,20 @@ public class ListViewAdaptor extends BaseAdapter {
         convertView.setOnClickListener(v->{
             Shopping _s = (Shopping) getItem(position);
             if(_s != null) _s.setDone(!_s.isDone());
-            MainActivityOnClickListner.update(v.getContext(), _s);
+            MainActivityOnClickListner.updateThr(v.getContext(), new IThrRes() {
+                @Override
+                public void isDone() {
+                    MainActivity.listViewAdaptor.notifyDataSetInvalidated();
+                    ((View)v).clearAnimation();
+                }
+
+                @Override
+                public void isError(String mess) {
+                    MainActivity.showMess(v.getContext(), mess);
+                    ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
+                }
+            }, _s);
+            ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.rotation));
         });
 
         convertView.setOnLongClickListener(v->{

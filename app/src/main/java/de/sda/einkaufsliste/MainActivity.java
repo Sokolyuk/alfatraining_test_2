@@ -2,6 +2,7 @@ package de.sda.einkaufsliste;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,16 +30,31 @@ public class MainActivity extends AppCompatActivity {
     public static List<Shopping> shoppingList = new ArrayList<>();
     public static ShoppingOpenHelper shoppingOpenHelper;
     public static ListViewAdaptor listViewAdaptor;
+    public static ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ((ImageButton)findViewById(R.id.btnAddShopping)).setOnClickListener(v->MainActivityOnClickListner.add(MainActivity.this));
+        ((ImageButton)findViewById(R.id.btnAddShopping)).setOnClickListener(v->{
+            MainActivityOnClickListner.addThr(MainActivity.this, new IThrRes() {
+                @Override
+                public void isDone() {
+                    ((View)v).clearAnimation();
+                }
+
+                @Override
+                public void isError(String mess) {
+                    showMess(mess);
+                    ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
+                }
+            });
+            ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.rotation));
+        });
 
         listViewAdaptor = new ListViewAdaptor(this);
-        ListView listView = (ListView)findViewById(R.id.listView);
+        listView = (ListView)findViewById(R.id.listView);
         listView.setAdapter(listViewAdaptor);
         registerForContextMenu(listView);
 
@@ -43,6 +62,13 @@ public class MainActivity extends AppCompatActivity {
 
         shoppingOpenHelper = new ShoppingOpenHelper(this);
         MainActivityOnClickListner.load(this);
+        this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override
@@ -72,13 +98,15 @@ public class MainActivity extends AppCompatActivity {
 
         switch (item.getOrder()){
             case 1:
-                MainActivityOnClickListner.edit(this, s);
+                MainActivityOnClickListner.edit(this, s, 1);
                 break;
             case 2:
-                MainActivityOnClickListner.delete(s);
+                MainActivityOnClickListner.deleteThr(this, s);
                 break;
             default:
         }
+
+
         return super.onContextItemSelected(item);
     }
 
@@ -108,4 +136,14 @@ public class MainActivity extends AppCompatActivity {
         showMess(this, mess);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch(resultCode){
+            case 1:
+                this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+                break;
+            default:
+        }
+    }
 }
