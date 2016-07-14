@@ -89,6 +89,17 @@ public class MainActivity extends AppCompatActivity {
         menu.setHeaderTitle(String.format("'%s'", s.getProductName()));
         menu.add(0, v.getId(), 1, "Edit");
         menu.add(0, v.getId(), 2, "Delete");
+        menu.add(0, v.getId(), 3, "RecyclerView");
+
+//((AdapterView.AdapterContextMenuInfo) menuInfo).targetView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
+
+
+    }
+
+    @Override
+    public void openContextMenu(View view) {
+        super.openContextMenu(view);
+        view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
     }
 
     @Override
@@ -102,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2:
                 MainActivityOnClickListner.deleteThr(this, s);
+                break;
+            case 3:
+                startActivity(new Intent(this, RecyclerViewActivity.class));
                 break;
             default:
         }

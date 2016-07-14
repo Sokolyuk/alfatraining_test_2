@@ -14,7 +14,7 @@ import de.sda.einkaufsliste.model.Shopping;
 /**
  * Created by Alfa on 13.07.2016.
  */
-public class EditActivity extends AppCompatActivity implements IThrRes {
+public class EditActivity extends AppCompatActivity {
 
     private EditText product;
     private EditText shop;
@@ -52,22 +52,22 @@ public class EditActivity extends AppCompatActivity implements IThrRes {
         ((ImageButton)findViewById(R.id.btn_edt_AddShopping)).setOnClickListener(v->{
             _shopping.setProductName(product.getText().toString());
             _shopping.setShopName(shop.getText().toString());
-            MainActivityOnClickListner.updateThr(this, this, _shopping);
+            MainActivityOnClickListner.updateThr(this, new IThrRes() {
+                @Override
+                public void isDone() {
+                    MainActivity.listViewAdaptor.notifyDataSetChanged();
+                    EditActivity.this.finish();
+                }
+
+                @Override
+                public void isError(String mess) {
+                    ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(EditActivity.this, R.anim.bounce));
+                    MainActivity.showMess(EditActivity.this, mess);
+                }
+            }, _shopping);
             ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
         });
 
-    }
-
-    @Override
-    public void isDone() {
-        MainActivity.listViewAdaptor.notifyDataSetChanged();
-        EditActivity.this.finish();
-    }
-
-    @Override
-    public void isError(String mess) {
-        ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
-        MainActivity.showMess(this, mess);
     }
 
 }
