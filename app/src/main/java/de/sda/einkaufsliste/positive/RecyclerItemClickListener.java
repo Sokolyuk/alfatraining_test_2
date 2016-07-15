@@ -1,4 +1,4 @@
-package de.sda.einkaufsliste;
+package de.sda.einkaufsliste.positive;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by Alfa on 14.07.2016.
+ * Created by Alfa on cat_13.07.2016.
  */
 public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListener {
     private OnItemClickListener mListener;

@@ -38,8 +38,8 @@ public class BlankFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param param1 Parameter cat_1.
+     * @param param2 Parameter cat_2.
      * @return A new instance of fragment BlankFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -68,7 +68,7 @@ public class BlankFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_blank, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
+    // TODO: Rename method, shoppingUpdate argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);

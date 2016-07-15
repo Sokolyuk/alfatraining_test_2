@@ -5,32 +5,42 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.EditText;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
+import de.sda.einkaufsliste.model.DBOpenHelper;
 import de.sda.einkaufsliste.model.Shopping;
+import de.sda.einkaufsliste.positive.RecyclerViewActivity;
+import de.sda.einkaufsliste.utils.IThrRes;
 
 public class MainActivity extends AppCompatActivity {
     public static List<Shopping> shoppingList = new ArrayList<>();
-    public static ShoppingOpenHelper shoppingOpenHelper;
+    public static DBOpenHelper dbOpenHelper;
     public static ListViewAdaptor listViewAdaptor;
     public static ListView listView;
+
+
+String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "Spinner Using Material Library", "Material Spinner Example"};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,21 +70,34 @@ public class MainActivity extends AppCompatActivity {
 
         ((ImageButton)findViewById(R.id.btnAddShopping)).requestFocus();
 
-        shoppingOpenHelper = new ShoppingOpenHelper(this);
+        dbOpenHelper = new DBOpenHelper(this);
         MainActivityOnClickListner.load(this);
         this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
 
-        View view = this.getCurrentFocus();
+        /*View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
+        }*/
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
+
+//// Create an ArrayAdapter using the string array and a default spinner layout
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.planets_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+
+        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)findViewById(R.id.android_material_design_spinner);
+        materialDesignSpinner.setAdapter(adapter);
+
     }
 
     @Override
     protected void onDestroy() {
-        shoppingOpenHelper.close();
-        shoppingOpenHelper = null;
+        dbOpenHelper.close();
+        dbOpenHelper = null;
         super.onDestroy();
     }
 
@@ -89,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         menu.setHeaderTitle(String.format("'%s'", s.getProductName()));
         menu.add(0, v.getId(), 1, "Edit");
         menu.add(0, v.getId(), 2, "Delete");
-        menu.add(0, v.getId(), 3, "RecyclerView");
+        menu.add(0, v.getId(), 3, "Positive");
 
 //((AdapterView.AdapterContextMenuInfo) menuInfo).targetView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
 

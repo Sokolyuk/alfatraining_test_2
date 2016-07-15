@@ -1,4 +1,4 @@
-package de.sda.einkaufsliste;
+package de.sda.einkaufsliste.positive;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,18 +9,20 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import de.sda.einkaufsliste.R;
+
 /**
- * Created by Alfa on 14.07.2016.
+ * Created by Alfa on cat_13.07.2016.
  */
 public class RecyclerViewActivity extends AppCompatActivity {
 
 
-    private final String recyclerViewTitleText[] = {"Android", "RecyclerView", "Android List", "GridView", "ListView", "Tutorial", "Example", "CardView", "Lollipop", "Marshmallow", "Custom ListView", "Custom GridView"
+    private final String recyclerViewTitleText[] = {"Android", "RecyclerView", "Android List", "GridView", "ListView", "Tutorial", "Example", "CardView", "Lollipop", "Marshmallow", "Custom ListView", "Custom GridView", "13", "14"
     };
 
     private final int recyclerViewImages[] = {
-            R.drawable.cat, R.drawable.cat, R.drawable.cat, R.drawable.cat, R.drawable.fluffy, R.drawable.fluffy,
-            R.drawable.fluffy, R.drawable.fluffy, R.drawable.fluffy, R.drawable.fluffy, R.drawable.fluffy, R.drawable.fluffy
+            R.drawable.cat_1, R.drawable.cat_2, R.drawable.cat_3, R.drawable.cat_4, R.drawable.cat_5, R.drawable.cat_6,
+            R.drawable.cat_7, R.drawable.cat_8, R.drawable.cat_9, R.drawable.cat_10, R.drawable.cat_11, R.drawable.cat_12, R.drawable.cat_13, R.drawable.cat_14
 
     };
 

@@ -1,7 +1,7 @@
-package de.sda.einkaufsliste;
+package de.sda.einkaufsliste.utils;
 
 /**
- * Created by Alfa on 13.07.2016.
+ * Created by Alfa on cat_12.07.2016.
  */
 public interface IThrRes {
     void isDone();

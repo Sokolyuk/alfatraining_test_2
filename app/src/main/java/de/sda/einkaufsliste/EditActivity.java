@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Shopping;
+import de.sda.einkaufsliste.utils.IThrRes;
 
 /**
- * Created by Alfa on 13.07.2016.
+ * Created by Alfa on cat_12.07.2016.
  */
 public class EditActivity extends AppCompatActivity {
 

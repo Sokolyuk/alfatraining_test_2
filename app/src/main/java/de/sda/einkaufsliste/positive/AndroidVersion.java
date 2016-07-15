@@ -1,7 +1,7 @@
-package de.sda.einkaufsliste;
+package de.sda.einkaufsliste.positive;
 
 /**
- * Created by Alfa on 14.07.2016.
+ * Created by Alfa on cat_13.07.2016.
  */
 public class AndroidVersion {
     private String recyclerViewTitleText;

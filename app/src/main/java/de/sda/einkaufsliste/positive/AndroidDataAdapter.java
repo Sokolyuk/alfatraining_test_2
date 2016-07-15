@@ -1,4 +1,4 @@
-package de.sda.einkaufsliste;
+package de.sda.einkaufsliste.positive;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +10,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import de.sda.einkaufsliste.R;
+
 /**
- * Created by Alfa on 14.07.2016.
+ * Created by Alfa on cat_13.07.2016.
  */
 public class AndroidDataAdapter extends RecyclerView.Adapter<AndroidDataAdapter.ViewHolder> {
     private ArrayList<AndroidVersion> arrayList;

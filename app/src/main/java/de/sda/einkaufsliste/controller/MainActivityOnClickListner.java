@@ -4,16 +4,14 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import java.util.List;
 
 import de.sda.einkaufsliste.EditActivity;
-import de.sda.einkaufsliste.IThrRes;
+import de.sda.einkaufsliste.utils.IThrRes;
 import de.sda.einkaufsliste.MainActivity;
 import de.sda.einkaufsliste.R;
-import de.sda.einkaufsliste.ShoppingOpenHelper;
 import de.sda.einkaufsliste.model.Shopping;
 
 /**
@@ -23,7 +21,7 @@ public class MainActivityOnClickListner {
 
     public static void load(MainActivity mainActivity) {
         try{
-            List<Shopping> shoppings = MainActivity.shoppingOpenHelper.select();
+            List<Shopping> shoppings = MainActivity.dbOpenHelper.shoppingSelect();
 
             MainActivity.shoppingList.clear();
 
@@ -50,7 +48,7 @@ public class MainActivityOnClickListner {
 
             new Thread(()->{
                 try {
-                    MainActivity.shoppingOpenHelper.insert(s);
+                    MainActivity.dbOpenHelper.shoppingInsert(s);
                     ((Activity)mainActivity).runOnUiThread(()->{
                         mainActivity.shoppingList.add(s);
                         _render(mainActivity);
@@ -77,9 +75,9 @@ public class MainActivityOnClickListner {
             String shopName = shop.getEditableText().toString();
 
             if (!productName.isEmpty() && !shopName.isEmpty()) {
-                Shopping s = new Shopping(-1, productName, shopName, false);
+                Shopping s = new Shopping(-cat_1, productName, shopName, false);
 
-                s.setId(MainActivity.shoppingOpenHelper.insert(s));
+                s.setId(MainActivity.dbOpenHelper.shoppingInsert(s));
 
                 mainActivity.shoppingList.add(s);
 
@@ -113,7 +111,7 @@ public class MainActivityOnClickListner {
     public static void updateThr(Context c, IThrRes i, Shopping s) {
             new Thread(()->{
                 try {
-                    MainActivity.shoppingOpenHelper.update(s);
+                    MainActivity.dbOpenHelper.shoppingUpdate(s);
                     if (i != null) ((Activity)c).runOnUiThread(()->{i.isDone();});
                 }catch(Exception e) {
                     e.printStackTrace();
@@ -125,7 +123,7 @@ public class MainActivityOnClickListner {
     public static void deleteThr(Context c, Shopping s) {
         ((MainActivity)c).listView.startAnimation(AnimationUtils.loadAnimation(c, R.anim.bounce));
         new Thread(()->{
-            MainActivity.shoppingOpenHelper.delete(s);
+            MainActivity.dbOpenHelper.shoppingDelete(s);
         }).start();
         MainActivity.shoppingList.remove(s);
         MainActivity.listViewAdaptor.notifyDataSetInvalidated();

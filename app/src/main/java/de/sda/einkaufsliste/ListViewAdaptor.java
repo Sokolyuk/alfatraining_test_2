@@ -2,7 +2,6 @@ package de.sda.einkaufsliste;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import de.sda.einkaufsliste.MainActivity;
+import de.sda.einkaufsliste.R;
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Shopping;
+import de.sda.einkaufsliste.utils.IThrRes;
 
 /**
  * Created by Alfa on 08.07.2016.
