@@ -1,32 +1,39 @@
 package de.sda.einkaufsliste.model;
 
 /**
- * Created by SDA on 05.07.2016.
+ * Created by Dmitry Sokolyuk on 05.07.2016.
  */
 public class Shopping {
     private String productName;
     private String shopName;
+    private long store_id;
     private boolean isDone;
     private long id;
 
     /**
-     * default constructor
-     */
-    public Shopping() {
-
-    }
-
-    /**
      * convinient constructor
      *
+     * @param id
      * @param productName
      * @param shopName
+     * @param store_id
+     * @param isDone
      */
-    public Shopping(long id, String productName, String shopName, boolean isDone) {
+    public Shopping(long id, String productName, String shopName, long store_id, boolean isDone) {
         this.id = id;
         this.productName = productName.trim();
         this.shopName = shopName.trim();
+        this.store_id = store_id;
         this.isDone = isDone;
+    }
+
+    //region g n s & toStr
+    public long getStore_id() {
+        return store_id;
+    }
+
+    public void setStore_id(long store_id) {
+        this.store_id = store_id;
     }
 
     public boolean isDone() {
@@ -65,4 +72,5 @@ public class Shopping {
     public void setId(long id) {
         this.id = id;
     }
+    //endregion
 }

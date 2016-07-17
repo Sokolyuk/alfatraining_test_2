@@ -30,12 +30,21 @@ public class ListViewAdaptor extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return MainActivity.shoppingList.size();
+        if (MainActivity.shoppingList == null) {
+            return 0;
+        } else {
+            return MainActivity.shoppingList.size();
+        }
     }
 
     @Override
     public Object getItem(int position) {
-        return MainActivity.shoppingList.get(position);
+        if (MainActivity.shoppingList == null) {
+            return null;
+        } else {
+            return MainActivity.shoppingList.get(position);
+        }
+
     }
 
     @Override

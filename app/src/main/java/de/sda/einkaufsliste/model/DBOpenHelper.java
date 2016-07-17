@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Alfa on 08.07.2016.
+ * Created by Dmitry Sokoltyk on 08.07.2016.
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
 
@@ -59,7 +59,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(DBStruct.SHOPPING_PRODUCTNAME, s.getProductName());
-        cv.put(DBStruct.SHOPPING_STORE, s.getShopName());
+        cv.put(DBStruct.SHOPPING_STORE_ID, s.getShopName());
         cv.put(DBStruct.SHOPPING_ISDONE, s.isDone()?1:0);
         long _id = db.insert(DBStruct.SHOPPING, null, cv);
         s.setId(_id);
@@ -82,14 +82,15 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         ArrayList<Shopping> res = new ArrayList<>();
         try{
             SQLiteDatabase d = getReadableDatabase();
-            try(Cursor cur = d.query(DBStruct.SHOPPING, null, null, null, null, null, null);){
+            try(Cursor cur = d.rawQuery(DBStruct.SHOPPING_SELECT, null);){
                 if (cur != null) {
                     while(cur.moveToNext()){
                         long id = cur.getLong(cur.getColumnIndex(DBStruct.SHOPPING_ID));
                         String productName = cur.getString(cur.getColumnIndex(DBStruct.SHOPPING_PRODUCTNAME));
-                        String shopName = cur.getString(cur.getColumnIndex(DBStruct.SHOPPING_STORE));
+                        String shopName = cur.getString(cur.getColumnIndex(DBStruct.SHOPPING_STORE_NAME));
+                        long store_id = cur.getLong(cur.getColumnIndex(DBStruct.SHOPPING_STORE_ID));
                         boolean isDone = cur.getInt(cur.getColumnIndex(DBStruct.SHOPPING_ISDONE)) > 0;
-                        res.add(new Shopping(id, productName, shopName, isDone));
+                        res.add(new Shopping(id, productName, shopName, store_id, isDone));
                     }
                 }
             }
@@ -128,7 +129,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(DBStruct.SHOPPING_PRODUCTNAME, s.getProductName());
-        cv.put(DBStruct.SHOPPING_STORE, s.getShopName());
+        cv.put(DBStruct.SHOPPING_STORE_ID, s.getStore_id());
         cv.put(DBStruct.SHOPPING_ISDONE, s.isDone()?1:0);
         db.update(DBStruct.SHOPPING, cv, String.format("%s=%s", DBStruct.SHOPPING_ID, String.valueOf(s.getId())), null);
     }

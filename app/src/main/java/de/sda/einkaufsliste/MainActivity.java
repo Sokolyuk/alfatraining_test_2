@@ -32,8 +32,12 @@ import de.sda.einkaufsliste.model.Shopping;
 import de.sda.einkaufsliste.positive.RecyclerViewActivity;
 import de.sda.einkaufsliste.utils.IThrRes;
 
+/**
+ * Created by Dmitry Sokolyuk on 05.07.2016.
+ */
 public class MainActivity extends AppCompatActivity {
     public static List<Shopping> shoppingList = new ArrayList<>();
+    public static List<Shopping> stores = new ArrayList<>();
     public static DBOpenHelper dbOpenHelper;
     public static ListViewAdaptor listViewAdaptor;
     public static ListView listView;
@@ -71,7 +75,7 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
         ((ImageButton)findViewById(R.id.btnAddShopping)).requestFocus();
 
         dbOpenHelper = new DBOpenHelper(this);
-        MainActivityOnClickListner.load(this);
+        shoppingList = MainActivityOnClickListner.load(this);
         this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
 
         /*View view = this.getCurrentFocus();
@@ -80,13 +84,13 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }*/
 
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        //Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
 
 //// Create an ArrayAdapter using the string array and a default spinner layout
 //        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.planets_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        //spinner.setAdapter(adapter);
 
 
         MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)findViewById(R.id.android_material_design_spinner);
@@ -98,6 +102,14 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
     protected void onDestroy() {
         dbOpenHelper.close();
         dbOpenHelper = null;
+        if (shoppingList != null) {
+            shoppingList.clear();
+            shoppingList = null;
+        }
+        if (stores != null) {
+            stores.clear();
+            stores = null;
+        }
         super.onDestroy();
     }
 

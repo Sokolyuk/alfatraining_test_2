@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 'Google Inc.:Google APIs:23'
-    buildToolsVersion "24"
+    buildToolsVersion '24.0.0'
     defaultConfig {
         applicationId "de.sda.einkaufsliste"
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 1
-        versionName "cat_1.0"
+        versionName '1'
         jackOptions {
             enabled true
         }

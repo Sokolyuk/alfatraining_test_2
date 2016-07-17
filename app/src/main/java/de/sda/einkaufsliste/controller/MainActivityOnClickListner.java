@@ -15,36 +15,30 @@ import de.sda.einkaufsliste.R;
 import de.sda.einkaufsliste.model.Shopping;
 
 /**
- * Created by SDA on 05.07.2016.
+ * Created by Dmitry Sokolyuk on 05.07.2016.
  */
 public class MainActivityOnClickListner {
 
-    public static void load(MainActivity mainActivity) {
+    public static List<Shopping> load(MainActivity mainActivity) {
         try{
-            List<Shopping> shoppings = MainActivity.dbOpenHelper.shoppingSelect();
-
-            MainActivity.shoppingList.clear();
-
-            for(Shopping s: shoppings){
-                MainActivity.shoppingList.add(new Shopping(s.getId(), s.getProductName(), s.getShopName(), s.isDone()));
-            }
-
-            _render(mainActivity);
-
+            return MainActivity.dbOpenHelper.shoppingSelect();
         }catch(Exception e){
-            Log.e("load", e.getMessage());
+            e.printStackTrace();
+            mainActivity.showMess(e.getMessage());
+            return null;
         }
     }
 
     public static void addThr(MainActivity mainActivity, IThrRes i) {
-        EditText product = (EditText)mainActivity.findViewById(R.id.txtProduct);
+/*        EditText product = (EditText)mainActivity.findViewById(R.id.txtProduct);
         EditText shop = (EditText)mainActivity.findViewById(R.id.txtShop);
 
         String productName = product.getEditableText().toString();
         String shopName = shop.getEditableText().toString();
+        long store_id = ?;
 
         if (!productName.isEmpty() && !shopName.isEmpty()) {
-            Shopping s = new Shopping(-1, productName, shopName, false);
+            Shopping s = new Shopping(-1, productName, shopName, store_id, false);
 
             new Thread(()->{
                 try {
@@ -62,40 +56,9 @@ public class MainActivityOnClickListner {
                 }
             }).start();
 
-        } else {
+        } else {*/
             mainActivity.showMess("Bitte alle Felder ausfuellen");
-        }
-
-
-/*        try{
-            EditText product = (EditText)mainActivity.findViewById(R.id.txtProduct);
-            EditText shop = (EditText)mainActivity.findViewById(R.id.txtShop);
-
-            String productName = product.getEditableText().toString();
-            String shopName = shop.getEditableText().toString();
-
-            if (!productName.isEmpty() && !shopName.isEmpty()) {
-                Shopping s = new Shopping(-cat_1, productName, shopName, false);
-
-                s.setId(MainActivity.dbOpenHelper.shoppingInsert(s));
-
-                mainActivity.shoppingList.add(s);
-
-                _render(mainActivity);
-
-                product.setText("");
-                shop.setText("");
-
-            } else {
-                mainActivity.showMess("Bitte alle Felder ausfuellen");
-            }
-
-            return true;
-        }catch(Exception e){
-            mainActivity.showMess(e.getMessage());
-            Log.e("saveShopping", e.getMessage());
-            return false;
-        }*/
+//        }
     }
 
     protected static void _render(MainActivity mainActivity){
