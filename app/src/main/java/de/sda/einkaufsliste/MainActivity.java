@@ -3,8 +3,11 @@ package de.sda.einkaufsliste;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -15,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -42,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
     public static ListViewAdaptor listViewAdaptor;
     public static ListView listView;
 
+    public static EditText product;
+    public static TextInputLayout productLayout;
+    public static MaterialBetterSpinner shopSpinner;
+
 
 String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "Spinner Using Material Library", "Material Spinner Example"};
 
@@ -51,8 +59,13 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        product = (EditText)findViewById(R.id.txtProduct);
+        productLayout = (TextInputLayout)findViewById(R.id.productLayout);
+        shopSpinner = (MaterialBetterSpinner)findViewById(R.id.shop);
+
+
         ((ImageButton)findViewById(R.id.btnAddShopping)).setOnClickListener(v->{
-            MainActivityOnClickListner.addThr(MainActivity.this, new IThrRes() {
+            if (MainActivityOnClickListner.addThr(MainActivity.this, new IThrRes() {
                 @Override
                 public void isDone() {
                     ((View)v).clearAnimation();
@@ -63,8 +76,10 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
                     showMess(mess);
                     ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
                 }
-            });
-            ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.rotation));
+            })) {
+                ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.rotation));
+            }
+
         });
 
         listViewAdaptor = new ListViewAdaptor(this);
@@ -84,19 +99,28 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }*/
 
-        //Spinner spinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
-
-//// Create an ArrayAdapter using the string array and a default spinner layout
-//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.planets_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //spinner.setAdapter(adapter);
-
-
-        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)findViewById(R.id.android_material_design_spinner);
+        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)findViewById(R.id.shop);
         materialDesignSpinner.setAdapter(adapter);
 
+
+        //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
+
+//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        //mDrawerList = (ListView) findViewById(R.id.drawer_layout);
+
+        // Set the adapter for the list view
+//        mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, SPINNERLIST));
+        // Set the list's click listener
+        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+
+
     }
+
+    //private DrawerLayout mDrawerLayout;
+    //private ListView mDrawerList;
 
     @Override
     protected void onDestroy() {

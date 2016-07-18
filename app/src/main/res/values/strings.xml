@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">Einkaufsliste</string>
-    <string name="txtProductHint">Produktnamen eingeben</string>
-    <string name="txtShopHint">Einkausmarktnamen eingeben</string>
+    <string name="txtProductHint">Produktnamen</string>
+    <string name="txtShopHint">Einkausmarktnamen</string>
     <string name="btnAddShoppingText">Einkauf auf die Einkaufsliste setzen</string>
     <string name="btnLoeschenText">Leeren</string>
     <string name="btnSaveText">Speichern</string>
     <string name="btnLoadText">Load</string>
     <string name="btnShow">Show</string>
     <string name="txtProductHint1">Einkaufsmarkt eingeben</string>
+    <string name="err_Product_invalidate">Produktnamen eingeben</string>
+    <string name="err_Shop_invalidate">Einkausmarktnamen eingeben</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

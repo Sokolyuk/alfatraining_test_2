@@ -3,9 +3,13 @@ package de.sda.einkaufsliste.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
 import java.util.List;
 
 import de.sda.einkaufsliste.EditActivity;
@@ -29,13 +33,43 @@ public class MainActivityOnClickListner {
         }
     }
 
-    public static void addThr(MainActivity mainActivity, IThrRes i) {
-/*        EditText product = (EditText)mainActivity.findViewById(R.id.txtProduct);
-        EditText shop = (EditText)mainActivity.findViewById(R.id.txtShop);
+    protected static boolean validateProduct(String product) {
+        return product != null && !product.isEmpty();
+    }
 
-        String productName = product.getEditableText().toString();
-        String shopName = shop.getEditableText().toString();
-        long store_id = ?;
+    protected static boolean validateShop(String shopName) {
+        return shopName != null && !shopName.isEmpty();
+    }
+
+    public static boolean validateInputAdd(MainActivity mainActivity, String productName, String shopName) {
+        boolean res = true;
+        if (!validateProduct(productName)) {
+            mainActivity.productLayout.setError(mainActivity.getString(R.string.err_Product_invalidate));
+            mainActivity.product.requestFocus();
+            res = false;
+        } else {
+            mainActivity.productLayout.setErrorEnabled(false);
+        }
+
+        if (!validateShop(shopName)) {
+            mainActivity.shopSpinner.setError(mainActivity.getString(R.string.err_Shop_invalidate));
+            res = false;
+        }
+
+        return res;
+    }
+
+
+    public static boolean addThr(MainActivity mainActivity, IThrRes i) {
+
+        String productName = mainActivity.product.getEditableText().toString();
+        String shopName = mainActivity.shopSpinner.getText().toString();
+
+        if (!validateInputAdd(mainActivity, productName, shopName)) return false;
+
+
+
+/*        long store_id = ?;
 
         if (!productName.isEmpty() && !shopName.isEmpty()) {
             Shopping s = new Shopping(-1, productName, shopName, store_id, false);
@@ -59,6 +93,7 @@ public class MainActivityOnClickListner {
         } else {*/
             mainActivity.showMess("Bitte alle Felder ausfuellen");
 //        }
+        return true;
     }
 
     protected static void _render(MainActivity mainActivity){
