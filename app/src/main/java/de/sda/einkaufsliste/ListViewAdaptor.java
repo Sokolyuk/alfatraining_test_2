@@ -30,19 +30,19 @@ public class ListViewAdaptor extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (MainActivity.shoppingList == null) {
+        if (MainActivity.mProducts == null) {
             return 0;
         } else {
-            return MainActivity.shoppingList.size();
+            return MainActivity.mProducts.size();
         }
     }
 
     @Override
     public Object getItem(int position) {
-        if (MainActivity.shoppingList == null) {
+        if (MainActivity.mProducts == null) {
             return null;
         } else {
-            return MainActivity.shoppingList.get(position);
+            return MainActivity.mProducts.get(position);
         }
 
     }
@@ -77,7 +77,7 @@ public class ListViewAdaptor extends BaseAdapter {
             MainActivityOnClickListner.updateThr(v.getContext(), new IThrRes() {
                 @Override
                 public void isDone() {
-                    MainActivity.listViewAdaptor.notifyDataSetInvalidated();
+//sda+                    MainActivity.listViewAdaptor.notifyDataSetInvalidated();
                     ((View)v).clearAnimation();
                 }
 

@@ -25,7 +25,7 @@ public class MainActivityOnClickListner {
 
     public static List<Shopping> load(MainActivity mainActivity) {
         try{
-            return MainActivity.dbOpenHelper.shoppingSelect();
+            return MainActivity.mOpenHelper.shoppingSelect();
         }catch(Exception e){
             e.printStackTrace();
             mainActivity.showMess(e.getMessage());
@@ -44,15 +44,15 @@ public class MainActivityOnClickListner {
     public static boolean validateInputAdd(MainActivity mainActivity, String productName, String shopName) {
         boolean res = true;
         if (!validateProduct(productName)) {
-            mainActivity.productLayout.setError(mainActivity.getString(R.string.err_Product_invalidate));
-            mainActivity.product.requestFocus();
+//sda+            mainActivity.productLayout.setError(mainActivity.getString(R.string.err_Product_invalidate));
+//sda+            mainActivity.product.requestFocus();
             res = false;
         } else {
-            mainActivity.productLayout.setErrorEnabled(false);
+//sda+            mainActivity.productLayout.setErrorEnabled(false);
         }
 
         if (!validateShop(shopName)) {
-            mainActivity.shopSpinner.setError(mainActivity.getString(R.string.err_Shop_invalidate));
+//sda+            mainActivity.shopSpinner.setError(mainActivity.getString(R.string.err_Shop_invalidate));
             res = false;
         }
 
@@ -62,10 +62,10 @@ public class MainActivityOnClickListner {
 
     public static boolean addThr(MainActivity mainActivity, IThrRes i) {
 
-        String productName = mainActivity.product.getEditableText().toString();
-        String shopName = mainActivity.shopSpinner.getText().toString();
+//sda+        String productName = mainActivity.product.getEditableText().toString();
+//sda+        String shopName = mainActivity.shopSpinner.getText().toString();
 
-        if (!validateInputAdd(mainActivity, productName, shopName)) return false;
+//sda+        if (!validateInputAdd(mainActivity, productName, shopName)) return false;
 
 
 
@@ -97,7 +97,7 @@ public class MainActivityOnClickListner {
     }
 
     protected static void _render(MainActivity mainActivity){
-        mainActivity.listViewAdaptor.notifyDataSetChanged();
+//sda+        mainActivity.listViewAdaptor.notifyDataSetChanged();
     }
 
     public static void edit(Context c, Shopping s, int resCode) {
@@ -109,7 +109,7 @@ public class MainActivityOnClickListner {
     public static void updateThr(Context c, IThrRes i, Shopping s) {
             new Thread(()->{
                 try {
-                    MainActivity.dbOpenHelper.shoppingUpdate(s);
+                    MainActivity.mOpenHelper.shoppingUpdate(s);
                     if (i != null) ((Activity)c).runOnUiThread(()->{i.isDone();});
                 }catch(Exception e) {
                     e.printStackTrace();
@@ -119,12 +119,12 @@ public class MainActivityOnClickListner {
     }
 
     public static void deleteThr(Context c, Shopping s) {
-        ((MainActivity)c).listView.startAnimation(AnimationUtils.loadAnimation(c, R.anim.bounce));
+        //sda+((MainActivity)c).listView.startAnimation(AnimationUtils.loadAnimation(c, R.anim.bounce));
         new Thread(()->{
-            MainActivity.dbOpenHelper.shoppingDelete(s);
+            MainActivity.mOpenHelper.shoppingDelete(s);
         }).start();
-        MainActivity.shoppingList.remove(s);
-        MainActivity.listViewAdaptor.notifyDataSetInvalidated();
+        MainActivity.mProducts.remove(s);
+//sda+        MainActivity.listViewAdaptor.notifyDataSetInvalidated();
 
     }
 

@@ -3,7 +3,9 @@ package de.sda.einkaufsliste;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
@@ -41,6 +43,7 @@ import java.util.List;
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.DBOpenHelper;
 import de.sda.einkaufsliste.model.Shopping;
+import de.sda.einkaufsliste.model.Store;
 import de.sda.einkaufsliste.positive.RecyclerViewActivity;
 import de.sda.einkaufsliste.utils.IThrRes;
 
@@ -48,29 +51,31 @@ import de.sda.einkaufsliste.utils.IThrRes;
  * Created by Dmitry Sokolyuk on 05.07.2016.
  */
 public class MainActivity extends AppCompatActivity {
-    public static List<Shopping> shoppingList = new ArrayList<>();
-    public static List<Shopping> stores = new ArrayList<>();
-    public static DBOpenHelper dbOpenHelper;
-    public static ListViewAdaptor listViewAdaptor;
-    public static ListView listView;
 
-    public static EditText product;
-    public static TextInputLayout productLayout;
-    public static MaterialBetterSpinner shopSpinner;
+    //public static EditText product;
+    //public static TextInputLayout productLayout;
+    //public static MaterialBetterSpinner shopSpinner;
 
-
-String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "Spinner Using Material Library", "Material Spinner Example"};
+//String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "Spinner Using Material Library", "Material Spinner Example"};
 
 
 
+    //region app data
+    public static List<Shopping> mProducts = new ArrayList<>();
+    public static List<Store> mStores = new ArrayList<>();
+    public static DBOpenHelper mOpenHelper;
+    //endregion
+    //region navigation
     private DrawerLayout mDrawerLayout;
     public static ViewPager mViewPager;
+    //endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //region init navigation
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -92,13 +97,24 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
+        //endregion
 
+        //region app data init & load
+        mOpenHelper = new DBOpenHelper(this);
+        mProducts = MainActivityOnClickListner.load(this);
+        //this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+        //endregion
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
 /*
-        if (1 == 1) return;
-
-
-
         product = (EditText)findViewById(R.id.txtProduct);
         productLayout = (TextInputLayout)findViewById(R.id.productLayout);
         shopSpinner = (MaterialBetterSpinner)findViewById(R.id.shop);
@@ -122,43 +138,71 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
 
         });
 
-        listViewAdaptor = new ListViewAdaptor(this);
-        listView = (ListView)findViewById(R.id.listView);
-        listView.setAdapter(listViewAdaptor);
-        registerForContextMenu(listView);
-
-        ((ImageButton)findViewById(R.id.btnAddShopping)).requestFocus();
-
-        dbOpenHelper = new DBOpenHelper(this);
-        shoppingList = MainActivityOnClickListner.load(this);
-        this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
-
-//        / *View view = this.getCurrentFocus();
-//        if (view != null) {
-//            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-//        }* /
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)findViewById(R.id.shop);
         materialDesignSpinner.setAdapter(adapter);
-
-
-        //Toolbar toolbar= (Toolbar) findViewById(R.id.toolbar);
-
-//        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mDrawerList = (ListView) findViewById(R.id.drawer_layout);
-
-        // Set the adapter for the list view
-//        mDrawerList.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, SPINNERLIST));
-        // Set the list's click listener
-        //mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-
-
 */
 
+        mProducts = new ArrayList<>();
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Shopping(1, "1", "11", 111, true));
+
+
+        mStores = new ArrayList<>();
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+        mStores.add(new Store(2, "2", "222", -1, -2));
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (mOpenHelper != null) {
+            mOpenHelper.close();
+            mOpenHelper = null;
+        }
+        if (mProducts != null) {
+            mProducts.clear();
+            mProducts = null;
+        }
+        if (mStores != null) {
+            mStores.clear();
+            mStores = null;
+        }
+        super.onDestroy();
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -222,6 +266,7 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
         }
     }
 
+    //fix bug v.23 - https://code.google.com/p/android/issues/detail?id=183166
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         try {
@@ -232,71 +277,6 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
         }
     }
 
-    //private DrawerLayout mDrawerLayout;
-    //private ListView mDrawerList;
-
-    @Override
-    protected void onDestroy() {
-        if (dbOpenHelper != null) {
-            dbOpenHelper.close();
-            dbOpenHelper = null;
-        }
-        if (shoppingList != null) {
-            shoppingList.clear();
-            shoppingList = null;
-        }
-        if (stores != null) {
-            stores.clear();
-            stores = null;
-        }
-        super.onDestroy();
-    }
-
-    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        super.onCreateContextMenu(menu, v, menuInfo);
-
-        ListView lv = (ListView) v;
-        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        Shopping s = (Shopping) lv.getItemAtPosition(acmi.position);
-
-        menu.setHeaderTitle(String.format("'%s'", s.getProductName()));
-        menu.add(0, v.getId(), 1, "Edit");
-        menu.add(0, v.getId(), 2, "Delete");
-        menu.add(0, v.getId(), 3, "Positive");
-
-//((AdapterView.AdapterContextMenuInfo) menuInfo).targetView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
-
-
-    }
-
-    @Override
-    public void openContextMenu(View view) {
-        super.openContextMenu(view);
-        view.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
-    }
-
-    @Override
-    public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Shopping s = (Shopping)MainActivity.listView.getItemAtPosition(info.position);
-
-        switch (item.getOrder()){
-            case 1:
-                MainActivityOnClickListner.edit(this, s, 1);
-                break;
-            case 2:
-                MainActivityOnClickListner.deleteThr(this, s);
-                break;
-            case 3:
-                startActivity(new Intent(this, RecyclerViewActivity.class));
-                break;
-            default:
-        }
-
-
-        return super.onContextItemSelected(item);
-    }
 
     @Override
     protected void onResume() {
@@ -329,7 +309,7 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
         super.onActivityResult(requestCode, resultCode, data);
         switch(resultCode){
             case 1:
-                this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
+//sda+                this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
                 break;
             default:
         }

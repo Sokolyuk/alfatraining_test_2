@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:adjustViewBounds="true"
-        android:src="@drawable/cat_1" />
+        android:src="@drawable/headbgr" />
 
     <TextView
         android:id="@+id/text"

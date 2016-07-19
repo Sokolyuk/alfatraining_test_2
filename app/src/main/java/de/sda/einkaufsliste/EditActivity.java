@@ -27,7 +27,7 @@ public class EditActivity extends AppCompatActivity {
         Long id = getIntent().getExtras().getLong("id");
 
         Shopping shopping = null;
-        for(Shopping _s: MainActivity.shoppingList){
+        for(Shopping _s: MainActivity.mProducts){
             if (_s.getId() == id) {
                 shopping = _s;
                 break;
@@ -49,13 +49,15 @@ public class EditActivity extends AppCompatActivity {
         final Shopping _shopping = shopping;
 
 
+        /*
+
         ((ImageButton)findViewById(R.id.btn_edt_AddShopping)).setOnClickListener(v->{
             _shopping.setProductName(product.getText().toString());
             _shopping.setShopName(shop.getText().toString());
             MainActivityOnClickListner.updateThr(this, new IThrRes() {
                 @Override
                 public void isDone() {
-                    MainActivity.listViewAdaptor.notifyDataSetChanged();
+//sda+                    MainActivity.listViewAdaptor.notifyDataSetChanged();
                     EditActivity.this.finish();
                 }
 
@@ -67,6 +69,8 @@ public class EditActivity extends AppCompatActivity {
             }, _shopping);
             ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
         });
+
+        */
 
     }
 
