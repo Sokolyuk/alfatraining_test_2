@@ -3,10 +3,24 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/stores"
-            android:checked="false"
-            android:icon="@mipmap/ic_droid_hi"
+            android:id="@+id/mn_home"
+            android:icon="@drawable/met_ic_close"
+            android:title="Home" />
+
+        <item
+            android:id="@+id/mn_products"
+            android:icon="@drawable/met_ic_close"
+            android:title="Prodicts" />
+
+        <item
+            android:id="@+id/mn_stores"
+            android:icon="@drawable/met_ic_close"
             android:title="Stores" />
+
+        <item
+            android:id="@+id/mn_statistic"
+            android:icon="@drawable/met_ic_close"
+            android:title="Statistics" />
 
     </group>
 </menu>

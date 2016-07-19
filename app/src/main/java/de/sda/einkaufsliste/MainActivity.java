@@ -3,8 +3,15 @@ package de.sda.einkaufsliste;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.NavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -12,6 +19,7 @@ import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
@@ -54,10 +62,42 @@ public class MainActivity extends AppCompatActivity {
 String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "Spinner Using Material Library", "Material Spinner Example"};
 
 
+
+    private DrawerLayout mDrawerLayout;
+    public static ViewPager mViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        final ActionBar ab = getSupportActionBar();
+        ab.setHomeAsUpIndicator(R.drawable.ic_menu);
+        ab.setDisplayHomeAsUpEnabled(true);
+
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (navigationView != null) {
+            setupDrawerContent(navigationView);
+        }
+
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
+        if (mViewPager != null) {
+            setupViewPager(mViewPager);
+        }
+
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
+
+
+/*
+        if (1 == 1) return;
+
+
 
         product = (EditText)findViewById(R.id.txtProduct);
         productLayout = (TextInputLayout)findViewById(R.id.productLayout);
@@ -93,11 +133,11 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
         shoppingList = MainActivityOnClickListner.load(this);
         this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
 
-        /*View view = this.getCurrentFocus();
-        if (view != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }*/
+//        / *View view = this.getCurrentFocus();
+//        if (view != null) {
+//            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+//            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//        }* /
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -117,6 +157,79 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
 
 
 
+*/
+
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(i->{
+            i.setChecked(true);
+            mDrawerLayout.closeDrawers();
+            switch(i.getItemId()){
+                case R.id.mn_home:
+                    mViewPager.setCurrentItem(0);
+                    break;
+                case R.id.mn_products:
+                    mViewPager.setCurrentItem(1);
+                    break;
+                case R.id.mn_stores:
+                    mViewPager.setCurrentItem(2);
+                    break;
+                case R.id.mn_statistic:
+                    mViewPager.setCurrentItem(3);
+                    break;
+                default:
+            }
+            return true;
+        });
+    }
+
+    private void setupViewPager(ViewPager viewPager) {
+        Adapter adapter = new Adapter(getSupportFragmentManager());
+        adapter.addFragment(new FragmentHome(), "Home");
+        adapter.addFragment(new FragmentProducts(), "Products");
+        adapter.addFragment(new FragmentStores(), "Stores");
+        adapter.addFragment(new FragmentStatistics(), "Statistics");
+        viewPager.setAdapter(adapter);
+    }
+
+    static class Adapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragments = new ArrayList<>();
+        private final List<String> mFragmentTitles = new ArrayList<>();
+
+        public Adapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragments.add(fragment);
+            mFragmentTitles.add(title);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragments.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragments.size();
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitles.get(position);
+        }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        try {
+            return super.dispatchTouchEvent(ev);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     //private DrawerLayout mDrawerLayout;
@@ -124,8 +237,10 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
 
     @Override
     protected void onDestroy() {
-        dbOpenHelper.close();
-        dbOpenHelper = null;
+        if (dbOpenHelper != null) {
+            dbOpenHelper.close();
+            dbOpenHelper = null;
+        }
         if (shoppingList != null) {
             shoppingList.clear();
             shoppingList = null;
@@ -164,7 +279,7 @@ String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "S
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Shopping s = (Shopping)((ListView)findViewById(R.id.listView)).getItemAtPosition(info.position);
+        Shopping s = (Shopping)MainActivity.listView.getItemAtPosition(info.position);
 
         switch (item.getOrder()){
             case 1:
