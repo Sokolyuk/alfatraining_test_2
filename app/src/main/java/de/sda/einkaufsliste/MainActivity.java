@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         //region app data init & load
         mOpenHelper = new DBOpenHelper(this);
-        mProducts = MainActivityOnClickListner.load(this);
+        mProducts = mOpenHelper.productsSelect();
+        mStores = mOpenHelper.storesSelect();
         //this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
         //endregion
 
@@ -116,12 +117,12 @@ public class MainActivity extends AppCompatActivity {
         ((ImageButton)findViewById(R.id.btnAddShopping)).setOnClickListener(v->{
             if (MainActivityOnClickListner.addThr(MainActivity.this, new IThrRes() {
                 @Override
-                public void isDone() {
+                public void onDone() {
                     ((View)v).clearAnimation();
                 }
 
                 @Override
-                public void isError(String mess) {
+                public void onError(String mess) {
                     showMess(mess);
                     ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
                 }
@@ -138,34 +139,6 @@ public class MainActivity extends AppCompatActivity {
         materialDesignSpinner.setAdapter(adapter);
 */
 
-        mProducts = new ArrayList<>();
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-        mProducts.add(new Product(1, "1", "11", 111, true));
-
-
-//        mStores = new ArrayList<>();
-//        mStores.add(new Store(2L, "2", "222", -1, -2, -3));
-//        mStores.add(new Store(2L, "2", "222", -1, -2, -3));
-//        mStores.add(new Store(2L, "2", "222", -1, -2, -3));
-
-        mStores = mOpenHelper.storesSelect();
 
     }
 

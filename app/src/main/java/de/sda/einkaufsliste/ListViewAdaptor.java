@@ -69,24 +69,24 @@ public class ListViewAdaptor extends BaseAdapter {
             imgDone.setVisibility(View.GONE);
         }
 
-        convertView.setOnClickListener(v->{
+/*        convertView.setOnClickListener(v->{
             Product _s = (Product) getItem(position);
             if(_s != null) _s.setDone(!_s.isDone());
             MainActivityOnClickListner.updateThr(v.getContext(), new IThrRes() {
                 @Override
-                public void isDone() {
+                public void onDone() {
 //sda+                    MainActivity.listViewAdaptor.notifyDataSetInvalidated();
                     ((View)v).clearAnimation();
                 }
 
                 @Override
-                public void isError(String mess) {
+                public void onError(String mess) {
                     MainActivity.showMess(v.getContext(), mess);
                     ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
                 }
             }, _s);
             ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.rotation));
-        });
+        });*/
 
         convertView.setOnLongClickListener(v->{
             ((Activity)context).openContextMenu(v);

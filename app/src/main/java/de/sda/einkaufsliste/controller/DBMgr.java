@@ -18,11 +18,11 @@ public class DBMgr {
                 MainActivity.mOpenHelper.storesInsert(s);
                 a.runOnUiThread(()->{
                     MainActivity.mStores.add(s);
-                    if (i != null) i.isDone();
+                    if (i != null) i.onDone();
                 });
             }catch(Exception e) {
                 e.printStackTrace();
-                if (i != null) ((Activity)a).runOnUiThread(()->{i.isError(e.getMessage());});
+                if (i != null) ((Activity)a).runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
     }
@@ -31,10 +31,10 @@ public class DBMgr {
         new Thread(()->{
             try {
                 MainActivity.mOpenHelper.storesUpdate(s);
-                if (i != null) a.runOnUiThread(()->{i.isDone();});
+                if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
-                if (i != null) a.runOnUiThread(()->{i.isError(e.getMessage());});
+                if (i != null) a.runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
     }
@@ -43,10 +43,10 @@ public class DBMgr {
         new Thread(() -> {
             try {
                 MainActivity.mOpenHelper.storesDelete(s);
-                if (i != null) a.runOnUiThread(()->{i.isDone();});
+                if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
-                if (i != null) a.runOnUiThread(()->{i.isError(e.getMessage());});
+                if (i != null) a.runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
         MainActivity.mStores.remove(s);
@@ -55,41 +55,41 @@ public class DBMgr {
     public static void addProductThr(Activity a, Product p, IThrRes i) {
         new Thread(()->{
             try {
-                MainActivity.mOpenHelper.Insert(p);
+                MainActivity.mOpenHelper.productInsert(p);
                 a.runOnUiThread(()->{
                     MainActivity.mProducts.add(p);
-                    if (i != null) i.isDone();
+                    if (i != null) i.onDone();
                 });
             }catch(Exception e) {
                 e.printStackTrace();
-                if (i != null) ((Activity)a).runOnUiThread(()->{i.isError(e.getMessage());});
+                if (i != null) ((Activity)a).runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
     }
 
-    public static void updateStoreThr(Activity a, Store s, IThrRes i) {
+    public static void updateProductThr(Activity a, Product p, IThrRes i) {
         new Thread(()->{
             try {
-                MainActivity.mOpenHelper.storesUpdate(s);
-                if (i != null) a.runOnUiThread(()->{i.isDone();});
+                MainActivity.mOpenHelper.productUpdate(p);
+                if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
-                if (i != null) a.runOnUiThread(()->{i.isError(e.getMessage());});
+                if (i != null) a.runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
     }
 
-    public static void deleteStoreThr(Activity a, Store s, IThrRes i) {
+    public static void deleteProductThr(Activity a, Product p, IThrRes i) {
         new Thread(() -> {
             try {
-                MainActivity.mOpenHelper.storesDelete(s);
-                if (i != null) a.runOnUiThread(()->{i.isDone();});
+                MainActivity.mOpenHelper.productDelete(p);
+                if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
-                if (i != null) a.runOnUiThread(()->{i.isError(e.getMessage());});
+                if (i != null) a.runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
-        MainActivity.mStores.remove(s);
+        MainActivity.mProducts.remove(p);
     }
 
 }

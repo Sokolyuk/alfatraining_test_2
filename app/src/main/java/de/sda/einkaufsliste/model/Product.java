@@ -6,20 +6,27 @@ package de.sda.einkaufsliste.model;
 public class Product {
     private String name;
     private String store_name;
-    private long store_id;
+    private Long store_id;
     private boolean isDone;
-    private long id;
+    private Long id;
 
     /**
      * convinient constructor
      *
-     * @param id
      * @param name
      * @param store_name
      * @param store_id
      * @param isDone
      */
-    public Product(long id, String name, String store_name, long store_id, boolean isDone) {
+    public Product(String name, String store_name, Long store_id, boolean isDone) {
+        this.id = null;
+        this.name = name.trim();
+        this.store_name = store_name.trim();
+        this.store_id = store_id;
+        this.isDone = isDone;
+    }
+
+    public Product(Long id, String name, String store_name, Long store_id, boolean isDone) {
         this.id = id;
         this.name = name.trim();
         this.store_name = store_name.trim();
@@ -28,11 +35,11 @@ public class Product {
     }
 
     //region g n s & toStr
-    public long getStore_id() {
+    public Long getStore_id() {
         return store_id;
     }
 
-    public void setStore_id(long store_id) {
+    public void setStore_id(Long store_id) {
         this.store_id = store_id;
     }
 
@@ -65,11 +72,11 @@ public class Product {
         return name + "->" + store_name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
     //endregion

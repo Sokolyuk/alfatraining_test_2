@@ -8,15 +8,15 @@ public interface DBStruct {
 
     public final String DB = "shopping.db";
 
-    public final String SHOPPING = "shopping";
-    public final String SHOPPING_ID = "id";
-    public final String SHOPPING_PRODUCTNAME = "productname";
-    public final String SHOPPING_STORE_NAME = "store_name";
-    public final String SHOPPING_STORE_ID = "store_id";
-    public final String SHOPPING_ISDONE = "isdone";
-    public final String SHOPPING_CREATE = "create table shopping(id integer primary key autoincrement, productname text, store_id integer, isdone integer, FOREIGN KEY(store_id) REFERENCES stores(id));";
-    public final String SHOPPING_DROP = "drop table if exists shopping;";
-    public final String SHOPPING_SELECT = "select s.id,s.productname,s.store_name,t.id as store_id,isdone from shopping s inner join stores t on s.store = t.id;";
+    public final String PRODUCTS = "products";
+    public final String PRODUCTS_ID = "id";
+    public final String PRODUCTS_NAME = "name";
+    public final String PRODUCTS_STORE_NAME = "store_name";
+    public final String PRODUCTS_STORE_ID = "store_id";
+    public final String PRODUCTS_ISDONE = "isdone";
+    public final String PRODUCTS_CREATE = "create table products(id integer primary key autoincrement, name text, store_id integer, isdone integer, FOREIGN KEY(store_id) REFERENCES stores(id));";
+    public final String PRODUCTS_DROP = "drop table if exists products;";
+    public final String PRODUCTS_SELECT = "select s.id,s.name,s.store_name,t.id as store_id,isdone from products s inner join stores t on s.store = t.id;";
 
     public final String STORES = "stores";
     public final String STORES_ID = "id";

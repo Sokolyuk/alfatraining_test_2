@@ -16,6 +16,7 @@ import de.sda.einkaufsliste.MainActivity;
  */
 public class MainActivityOnClickListner {
 
+    /*
     public static List<Product> load(MainActivity mainActivity) {
         try{
             return MainActivity.mOpenHelper.shoppingSelect();
@@ -62,28 +63,28 @@ public class MainActivityOnClickListner {
 
 
 
-/*        long store_id = ?;
-
-        if (!productName.isEmpty() && !shopName.isEmpty()) {
-            Product s = new Product(-1, productName, shopName, store_id, false);
-
-            new Thread(()->{
-                try {
-                    MainActivity.dbOpenHelper.shoppingInsert(s);
-                    ((Activity)mainActivity).runOnUiThread(()->{
-                        mainActivity.shoppingList.add(s);
-                        _render(mainActivity);
-                        product.setText("");
-                        shop.setText("");
-                        if (i != null) i.isDone();
-                    });
-                }catch(Exception e) {
-                    e.printStackTrace();
-                    if (i != null) ((Activity)mainActivity).runOnUiThread(()->{i.isError(e.getMessage());});
-                }
-            }).start();
-
-        } else {*/
+//        long store_id = ?;
+//
+//        if (!productName.isEmpty() && !shopName.isEmpty()) {
+//            Product s = new Product(-1, productName, shopName, store_id, false);
+//
+//            new Thread(()->{
+//                try {
+//                    MainActivity.dbOpenHelper.productInsert(s);
+//                    ((Activity)mainActivity).runOnUiThread(()->{
+//                        mainActivity.shoppingList.add(s);
+//                        _render(mainActivity);
+//                        product.setText("");
+//                        shop.setText("");
+//                        if (i != null) i.onDone();
+//                    });
+//                }catch(Exception e) {
+//                    e.printStackTrace();
+//                    if (i != null) ((Activity)mainActivity).runOnUiThread(()->{i.onError(e.getMessage());});
+//                }
+//            }).start();
+//
+//        } else {
             mainActivity.showMess("Bitte alle Felder ausfuellen");
 //        }
         return true;
@@ -102,11 +103,11 @@ public class MainActivityOnClickListner {
     public static void updateThr(Context c, IThrRes i, Product s) {
             new Thread(()->{
                 try {
-                    MainActivity.mOpenHelper.shoppingUpdate(s);
-                    if (i != null) ((Activity)c).runOnUiThread(()->{i.isDone();});
+                    MainActivity.mOpenHelper.productUpdate(s);
+                    if (i != null) ((Activity)c).runOnUiThread(()->{i.onDone();});
                 }catch(Exception e) {
                     e.printStackTrace();
-                    if (i != null) ((Activity)c).runOnUiThread(()->{i.isError(e.getMessage());});
+                    if (i != null) ((Activity)c).runOnUiThread(()->{i.onError(e.getMessage());});
                 }
             }).start();
     }
@@ -114,13 +115,13 @@ public class MainActivityOnClickListner {
     public static void deleteThr(Context c, Product s) {
         //sda+((MainActivity)c).listView.startAnimation(AnimationUtils.loadAnimation(c, R.anim.bounce));
         new Thread(()->{
-            MainActivity.mOpenHelper.shoppingDelete(s);
+            MainActivity.mOpenHelper.productDelete(s);
         }).start();
         MainActivity.mProducts.remove(s);
 //sda+        MainActivity.listViewAdaptor.notifyDataSetInvalidated();
 
     }
 
-
+*/
 
 }

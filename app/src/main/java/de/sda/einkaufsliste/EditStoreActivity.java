@@ -8,6 +8,7 @@ import android.widget.EditText;
 
 import de.sda.einkaufsliste.controller.DBMgr;
 import de.sda.einkaufsliste.model.Store;
+import de.sda.einkaufsliste.utils.Edit;
 import de.sda.einkaufsliste.utils.IThrRes;
 
 /**
@@ -46,41 +47,39 @@ public class EditStoreActivity extends AppCompatActivity {
         Store store = null;
         Bundle b = getIntent().getExtras();
         if (b != null) {
-            Long id = b.getLong("id");
-            if (id != null) {
-                for(Store _s: MainActivity.mStores){
-                    if (_s.getId() == id) {
-                        store = _s;
-                        break;
-                    }
+            long id = b.getLong("id");
+
+            for(Store _s: MainActivity.mStores){
+                if (_s.getId() == id) {
+                    store = _s;
+                    break;
+                }
+            }
+
+            if (store != null) {
+                edit_store_name = (EditText)findViewById(R.id.edit_store_name);
+                if (edit_store_name != null) {
+                    edit_store_name.setText(store.getName());
                 }
 
-                if (store != null) {
-                    edit_store_name = (EditText)findViewById(R.id.edit_store_name);
-                    if (edit_store_name != null) {
-                        edit_store_name.setText(store.getName());
-                    }
+                edit_store_address = (EditText)findViewById(R.id.edit_store_address);
+                if (edit_store_address != null) {
+                    edit_store_address.setText(store.getAddress());
+                }
 
-                    edit_store_address = (EditText)findViewById(R.id.edit_store_address);
-                    if (edit_store_address != null) {
-                        edit_store_address.setText(store.getAddress());
-                    }
+                edit_store_longitude = (EditText)findViewById(R.id.edit_store_longitude);
+                if (edit_store_longitude != null) {
+                    edit_store_longitude.setText(String.valueOf(store.getLongitude()));
+                }
 
-                    edit_store_longitude = (EditText)findViewById(R.id.edit_store_longitude);
-                    if (edit_store_longitude != null) {
-                        edit_store_longitude.setText(String.valueOf(store.getLongitude()));
-                    }
+                edit_store_latitude = (EditText)findViewById(R.id.edit_store_latitude);
+                if (edit_store_latitude != null) {
+                    edit_store_latitude.setText(String.valueOf(store.getLatitude()));
+                }
 
-                    edit_store_latitude = (EditText)findViewById(R.id.edit_store_latitude);
-                    if (edit_store_latitude != null) {
-                        edit_store_latitude.setText(String.valueOf(store.getLatitude()));
-                    }
-
-                    edit_store_altitude = (EditText)findViewById(R.id.edit_store_altitude);
-                    if (edit_store_altitude != null) {
-                        edit_store_altitude.setText(String.valueOf(store.getAltitude()));
-                    }
-
+                edit_store_altitude = (EditText)findViewById(R.id.edit_store_altitude);
+                if (edit_store_altitude != null) {
+                    edit_store_altitude.setText(String.valueOf(store.getAltitude()));
                 }
 
             }
@@ -99,13 +98,13 @@ public class EditStoreActivity extends AppCompatActivity {
                         Double.valueOf(edit_store_latitude.getText().toString()),
                         Double.valueOf(edit_store_altitude.getText().toString())), new IThrRes() {
                     @Override
-                    public void isDone() {
+                    public void onDone() {
                         FragmentStores.mStoresListViewAdaptor.notifyDataSetChanged();
                         finish();
                     }
 
                     @Override
-                    public void isError(String mess) {
+                    public void onError(String mess) {
                         MainActivity.showMess(EditStoreActivity.this, mess);
                     }
                 });
@@ -120,13 +119,13 @@ public class EditStoreActivity extends AppCompatActivity {
                 //update
                 DBMgr.updateStoreThr(EditStoreActivity.this, lstore, new IThrRes() {
                     @Override
-                    public void isDone() {
+                    public void onDone() {
                         FragmentStores.mStoresListViewAdaptor.notifyDataSetChanged();
                         finish();
                     }
 
                     @Override
-                    public void isError(String mess) {
+                    public void onError(String mess) {
                         MainActivity.showMess(EditStoreActivity.this, mess);
                     }
                 });
@@ -134,36 +133,12 @@ public class EditStoreActivity extends AppCompatActivity {
         });
     }
 
-    protected boolean validateText(EditText e, TextInputLayout w) {
-        if (e.getText().length() == 0) {
-            w.setError(getString(R.string.err_field_is_empty));
-            //edit_store_name.requestFocus();
-            return false;
-        } else {
-            w.setErrorEnabled(false);
-            return true;
-        }
-    }
-
-    protected boolean validateDouble(EditText e, TextInputLayout w) {
-        if (validateText(e, w)) {
-            try{
-                Double.valueOf(e.getText().toString());
-                w.setErrorEnabled(false);
-                return true;
-            }catch(Exception ex){
-                w.setError(getString(R.string.err_incorrect_double_value));
-            }
-        }
-        return false;
-    }
-
     protected boolean validate() {
-        if (validateText(edit_store_name, edit_store_nameWrapper) &
-            validateText(edit_store_address, edit_store_addressWrapper) &
-            validateDouble(edit_store_longitude, edit_store_longitudeWrapper) &
-            validateDouble(edit_store_latitude, edit_store_latitudeWrapper) &
-            validateDouble(edit_store_altitude, edit_store_altitudeWrapper)) {
+        if (Edit.validateText(this, edit_store_name, edit_store_nameWrapper) &
+                Edit.validateText(this, edit_store_address, edit_store_addressWrapper) &
+                Edit.validateDouble(this, edit_store_longitude, edit_store_longitudeWrapper) &
+                Edit.validateDouble(this, edit_store_latitude, edit_store_latitudeWrapper) &
+                Edit.validateDouble(this, edit_store_altitude, edit_store_altitudeWrapper)) {
             return true;
         }
         return false;

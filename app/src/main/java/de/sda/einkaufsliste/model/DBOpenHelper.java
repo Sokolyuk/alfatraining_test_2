@@ -26,7 +26,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     @Override
     public synchronized void onCreate(SQLiteDatabase db) {
         db.execSQL(DBStruct.STORES_CREATE);
-        db.execSQL(DBStruct.SHOPPING_CREATE);
+        db.execSQL(DBStruct.PRODUCTS_CREATE);
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public synchronized void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL(DBStruct.SHOPPING_DROP);
+        db.execSQL(DBStruct.PRODUCTS_DROP);
         db.execSQL(DBStruct.STORES_DROP);
         onCreate(db);
     }
@@ -55,13 +55,13 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param s
      * @return Did Der Primaerschluessel der eingefuegten Zeile.
      */
-    public synchronized long shoppingInsert(Product s) {
+    public synchronized long productInsert(Product s) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(DBStruct.SHOPPING_PRODUCTNAME, s.getName());
-        cv.put(DBStruct.SHOPPING_STORE_ID, s.getStore_name());
-        cv.put(DBStruct.SHOPPING_ISDONE, s.isDone()?1:0);
-        long _id = db.insert(DBStruct.SHOPPING, null, cv);
+        cv.put(DBStruct.PRODUCTS_NAME, s.getName());
+        cv.put(DBStruct.PRODUCTS_STORE_ID, s.getStore_id());
+        cv.put(DBStruct.PRODUCTS_ISDONE, s.isDone()?1:0);
+        long _id = db.insert(DBStruct.PRODUCTS, null, cv);
         s.setId(_id);
         return _id;
     }
@@ -79,18 +79,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         return _id;
     }
 
-    public synchronized List<Product> shoppingSelect() {
+    public synchronized List<Product> productsSelect() {
         ArrayList<Product> res = new ArrayList<>();
         try{
             SQLiteDatabase d = getReadableDatabase();
-            try(Cursor cur = d.rawQuery(DBStruct.SHOPPING_SELECT, null);){
+            try(Cursor cur = d.rawQuery(DBStruct.PRODUCTS_SELECT, null);){
                 if (cur != null) {
                     while(cur.moveToNext()){
-                        long id = cur.getLong(cur.getColumnIndex(DBStruct.SHOPPING_ID));
-                        String productName = cur.getString(cur.getColumnIndex(DBStruct.SHOPPING_PRODUCTNAME));
-                        String shopName = cur.getString(cur.getColumnIndex(DBStruct.SHOPPING_STORE_NAME));
-                        long store_id = cur.getLong(cur.getColumnIndex(DBStruct.SHOPPING_STORE_ID));
-                        boolean isDone = cur.getInt(cur.getColumnIndex(DBStruct.SHOPPING_ISDONE)) > 0;
+                        long id = cur.getLong(cur.getColumnIndex(DBStruct.PRODUCTS_ID));
+                        String productName = cur.getString(cur.getColumnIndex(DBStruct.PRODUCTS_NAME));
+                        String shopName = cur.getString(cur.getColumnIndex(DBStruct.PRODUCTS_STORE_NAME));
+                        long store_id = cur.getLong(cur.getColumnIndex(DBStruct.PRODUCTS_STORE_ID));
+                        boolean isDone = cur.getInt(cur.getColumnIndex(DBStruct.PRODUCTS_ISDONE)) > 0;
                         res.add(new Product(id, productName, shopName, store_id, isDone));
                     }
                 }
@@ -98,7 +98,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             return res;
         }catch(Exception e){
             Log.e(getClass().toString(), e.getMessage());
-            return null;
+            return new ArrayList<>();
         }
     }
 
@@ -122,18 +122,18 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             return res;
         }catch(Exception e){
             Log.e(getClass().toString(), e.getMessage());
-            return null;
+            return new ArrayList<>();
         }
     }
 
-    public synchronized void shoppingUpdate(Product s) throws Exception {
+    public synchronized void productUpdate(Product s) throws Exception {
         if (s.getId() < 1) throw new Exception(DBStruct.ERR_IDUNASSIGNED);
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(DBStruct.SHOPPING_PRODUCTNAME, s.getName());
-        cv.put(DBStruct.SHOPPING_STORE_ID, s.getStore_id());
-        cv.put(DBStruct.SHOPPING_ISDONE, s.isDone()?1:0);
-        db.update(DBStruct.SHOPPING, cv, String.format("%s=%s", DBStruct.SHOPPING_ID, String.valueOf(s.getId())), null);
+        cv.put(DBStruct.PRODUCTS_NAME, s.getName());
+        cv.put(DBStruct.PRODUCTS_STORE_ID, s.getStore_id());
+        cv.put(DBStruct.PRODUCTS_ISDONE, s.isDone()?1:0);
+        db.update(DBStruct.PRODUCTS, cv, String.format("%s=%s", DBStruct.PRODUCTS_ID, String.valueOf(s.getId())), null);
     }
 
     public synchronized void storesUpdate(Store s) throws Exception {
@@ -148,10 +148,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.update(DBStruct.STORES, cv, String.format("%s=%s", DBStruct.STORES_ID, String.valueOf(s.getId())), null);
     }
 
-    public synchronized void shoppingDelete(Product s) {
+    public synchronized void productDelete(Product s) {
         if (s.getId() < 1) return;
         SQLiteDatabase db = getWritableDatabase();
-        db.delete(DBStruct.SHOPPING, String.format("%s=%s", DBStruct.SHOPPING_ID, String.valueOf(s.getId())), null);
+        db.delete(DBStruct.PRODUCTS, String.format("%s=%s", DBStruct.PRODUCTS_ID, String.valueOf(s.getId())), null);
     }
 
     public synchronized void storesDelete(Store s) {

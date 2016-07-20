@@ -33,7 +33,7 @@ public class FragmentStores extends Fragment {
         View v = inflater.inflate(R.layout.fragmant_stores, container, false);
 
         mStoresListViewAdaptor = new StoresListViewAdaptor(getActivity());
-        mStoresListView = (ListView)v.findViewById(R.id.listView);
+        mStoresListView = (ListView)v.findViewById(R.id.listViewStores);
         mStoresListView.setAdapter(mStoresListViewAdaptor);
         registerForContextMenu(mStoresListView);
 
@@ -49,39 +49,46 @@ public class FragmentStores extends Fragment {
         Store s = (Store) lv.getItemAtPosition(acmi.position);
 
         menu.setHeaderTitle(String.format("Store: '%s'", s.getName()));
-        menu.add(0, v.getId(), 1, "Edit store");
-        menu.add(0, v.getId(), 2, "Delete store");
+        menu.add(0, v.getId(), ContextMenuConsts.cmStoreEdit, "Edit store");
+        menu.add(0, v.getId(), ContextMenuConsts.cmStoreDelete, "Delete store");
+    }
+
+    protected Store StoreByMenuItem(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        return (Store) mStoresListView.getItemAtPosition(info.position);
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        Store s = (Store)FragmentStores.mStoresListView.getItemAtPosition(info.position);
+        if (getUserVisibleHint()) {
 
-        switch (item.getOrder()){
-            case 1:
-                Intent i = new Intent(getActivity(), EditStoreActivity.class);
-                i.putExtra("id", s.getId());
-                startActivity(i);
-                break;
-            case 2:
-                DBMgr.deleteStoreThr(getActivity(), s, new IThrRes() {
-                    @Override
-                    public void isDone() {
-                        mStoresListViewAdaptor.notifyDataSetChanged();
-                        MainActivity.showMess(getContext(), String.format("Store '%s' deleted", s.getName()));
-                    }
+            switch (item.getOrder()){
+                case ContextMenuConsts.cmStoreEdit:
+                    Intent i = new Intent(getActivity(), EditStoreActivity.class);
+                    i.putExtra("id", StoreByMenuItem(item).getId());
+                    startActivity(i);
+                    break;
+                case ContextMenuConsts.cmStoreDelete:
+                    Store s = StoreByMenuItem(item);
+                    DBMgr.deleteStoreThr(getActivity(), s, new IThrRes() {
+                        @Override
+                        public void onDone() {
+                            mStoresListViewAdaptor.notifyDataSetChanged();
+                            MainActivity.showMess(getContext(), String.format("Store '%s' deleted", s.getName()));
+                        }
 
-                    @Override
-                    public void isError(String mess) {
-                        MainActivity.showMess(getContext(), mess);
-                    }
-                });
-                break;
-            default:
+                        @Override
+                        public void onError(String mess) {
+                            MainActivity.showMess(getContext(), mess);
+                        }
+                    });
+                    break;
+                default:
+            }
+            return super.onContextItemSelected(item);
         }
+        return false;
 
-        return super.onContextItemSelected(item);
     }
 
     public class StoresListViewAdaptor extends BaseAdapter {
