@@ -2,7 +2,6 @@ package de.sda.einkaufsliste;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,10 +16,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Shopping;
-import de.sda.einkaufsliste.positive.RecyclerViewActivity;
 import de.sda.einkaufsliste.utils.IThrRes;
 
 /**

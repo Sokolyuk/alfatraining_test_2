@@ -3,19 +3,12 @@ package de.sda.einkaufsliste.controller;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.support.design.widget.TextInputLayout;
-import android.util.Log;
-import android.view.animation.AnimationUtils;
-import android.widget.EditText;
-
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 import java.util.List;
 
-import de.sda.einkaufsliste.EditActivity;
+import de.sda.einkaufsliste.EditPruductsActivity;
 import de.sda.einkaufsliste.utils.IThrRes;
 import de.sda.einkaufsliste.MainActivity;
-import de.sda.einkaufsliste.R;
 import de.sda.einkaufsliste.model.Shopping;
 
 /**
@@ -101,7 +94,7 @@ public class MainActivityOnClickListner {
     }
 
     public static void edit(Context c, Shopping s, int resCode) {
-        Intent i = new Intent(c, EditActivity.class);
+        Intent i = new Intent(c, EditPruductsActivity.class);
         i.putExtra("id", s.getId());
         ((Activity)c).startActivityForResult(i, resCode);
     }

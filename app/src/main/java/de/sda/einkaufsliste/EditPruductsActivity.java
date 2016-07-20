@@ -14,7 +14,7 @@ import de.sda.einkaufsliste.utils.IThrRes;
 /**
  * Created by Alfa on cat_12.07.2016.
  */
-public class EditActivity extends AppCompatActivity {
+public class EditPruductsActivity extends AppCompatActivity {
 
     private EditText product;
     private EditText shop;
@@ -58,13 +58,13 @@ public class EditActivity extends AppCompatActivity {
                 @Override
                 public void isDone() {
 //sda+                    MainActivity.listViewAdaptor.notifyDataSetChanged();
-                    EditActivity.this.finish();
+                    EditPruductsActivity.this.finish();
                 }
 
                 @Override
                 public void isError(String mess) {
-                    ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(EditActivity.this, R.anim.bounce));
-                    MainActivity.showMess(EditActivity.this, mess);
+                    ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(EditPruductsActivity.this, R.anim.bounce));
+                    MainActivity.showMess(EditPruductsActivity.this, mess);
                 }
             }, _shopping);
             ((View)findViewById(R.id.edtLayout)).startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));

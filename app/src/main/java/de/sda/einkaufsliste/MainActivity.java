@@ -3,11 +3,11 @@ package de.sda.einkaufsliste;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -17,35 +17,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.DBOpenHelper;
 import de.sda.einkaufsliste.model.Shopping;
 import de.sda.einkaufsliste.model.Store;
-import de.sda.einkaufsliste.positive.RecyclerViewActivity;
-import de.sda.einkaufsliste.utils.IThrRes;
 
 /**
  * Created by Dmitry Sokolyuk on 05.07.2016.
@@ -55,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     //public static EditText product;
     //public static TextInputLayout productLayout;
     //public static MaterialBetterSpinner shopSpinner;
-
 //String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "Spinner Using Material Library", "Material Spinner Example"};
 
 
@@ -69,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     public static ViewPager mViewPager;
     //endregion
+
+    public static LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
 /*
         product = (EditText)findViewById(R.id.txtProduct);
@@ -281,11 +268,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+System.out.println("MA.onResume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+System.out.println("MA.onPause");
     }
 
     public static void showMess(Context context, String mess) {
