@@ -2,6 +2,7 @@ package de.sda.einkaufsliste;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,16 +17,18 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import de.sda.einkaufsliste.controller.DBMgr;
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
-import de.sda.einkaufsliste.model.Shopping;
+import de.sda.einkaufsliste.model.Product;
 import de.sda.einkaufsliste.utils.IThrRes;
 
 /**
- * Created by Alfa on 19.07.2016.
+ * Created by Dmitry Sokolyuk on 19.07.2016.
  */
 public class FragmentProducts extends Fragment {
 
-    public static ProductListViewAdaptor mListViewAdaptor;
+    public static ProductListViewAdaptor mProductListViewAdaptor;
     public static ListView mListView;
 
     @Nullable
@@ -33,9 +36,9 @@ public class FragmentProducts extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragmant_products, container, false);
 
-        mListViewAdaptor = new ProductListViewAdaptor(getActivity());
+        mProductListViewAdaptor = new ProductListViewAdaptor(getActivity());
         mListView = (ListView)v.findViewById(R.id.listView);
-        mListView.setAdapter(mListViewAdaptor);
+        mListView.setAdapter(mProductListViewAdaptor);
         registerForContextMenu(mListView);
 
         return v;
@@ -47,32 +50,37 @@ public class FragmentProducts extends Fragment {
 
         ListView lv = (ListView) v;
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
-        Shopping s = (Shopping) lv.getItemAtPosition(acmi.position);
+        Product s = (Product) lv.getItemAtPosition(acmi.position);
 
-        menu.setHeaderTitle(String.format("'%s'", s.getProductName()));
-        menu.add(0, v.getId(), 1, "Edit");
-        menu.add(0, v.getId(), 2, "Delete");
-        menu.add(0, v.getId(), 3, "Positive");
-
-//((AdapterView.AdapterContextMenuInfo) menuInfo).targetView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
-
-
+        menu.setHeaderTitle(String.format("Product: '%s'", s.getName()));
+        menu.add(0, v.getId(), 1, "Edit product");
+        menu.add(0, v.getId(), 2, "Delete product");
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//sda+        Shopping s = (Shopping)MainActivity.listView.getItemAtPosition(info.position);
+        Product s = (Product)mListView.getItemAtPosition(info.position);
 
         switch (item.getOrder()){
             case 1:
-//sda+                MainActivityOnClickListner.edit(this, s, 1);
+                Intent i = new Intent(getActivity(), EditProductActivity.class);
+                i.putExtra("id", s.getId());
+                startActivity(i);
                 break;
             case 2:
-//sda+                MainActivityOnClickListner.deleteThr(this, s);
-                break;
-            case 3:
-//sda+                startActivity(new Intent(this, RecyclerViewActivity.class));
+                DBMgr.deleteProductThr(getActivity(), s, new IThrRes() {
+                    @Override
+                    public void isDone() {
+                        mProductListViewAdaptor.notifyDataSetChanged();
+                        MainActivity.showMess(getContext(), String.format("Product '%s' deleted", s.getName()));
+                    }
+
+                    @Override
+                    public void isError(String mess) {
+                        MainActivity.showMess(getContext(), mess);
+                    }
+                });
                 break;
             default:
         }
@@ -121,9 +129,9 @@ public class FragmentProducts extends Fragment {
                 convertView = layoutInflater.inflate(R.layout.list_view_item_layout, parent, false);
             }
 
-            Shopping s = (Shopping) getItem(position);
-            ((TextView)convertView.findViewById(R.id.idWare)).setText(s.getProductName());
-            ((TextView)convertView.findViewById(R.id.idShop)).setText(s.getShopName());
+            Product s = (Product) getItem(position);
+            ((TextView)convertView.findViewById(R.id.idWare)).setText(s.getName());
+            ((TextView)convertView.findViewById(R.id.idShop)).setText(s.getStore_name());
             ImageView imgNone = (ImageView)convertView.findViewById(R.id.imgNone);
             ImageView imgDone = (ImageView)convertView.findViewById(R.id.imgDone);
             if (s.isDone()) {
@@ -135,7 +143,7 @@ public class FragmentProducts extends Fragment {
             }
 
             convertView.setOnClickListener(v->{
-                Shopping _s = (Shopping) getItem(position);
+                Product _s = (Product) getItem(position);
                 if(_s != null) _s.setDone(!_s.isDone());
                 MainActivityOnClickListner.updateThr(v.getContext(), new IThrRes() {
                     @Override

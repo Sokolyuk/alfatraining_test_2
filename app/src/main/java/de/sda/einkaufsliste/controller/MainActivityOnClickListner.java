@@ -6,17 +6,17 @@ import android.content.Intent;
 
 import java.util.List;
 
-import de.sda.einkaufsliste.EditPruductsActivity;
+import de.sda.einkaufsliste.EditProductActivity;
+import de.sda.einkaufsliste.model.Product;
 import de.sda.einkaufsliste.utils.IThrRes;
 import de.sda.einkaufsliste.MainActivity;
-import de.sda.einkaufsliste.model.Shopping;
 
 /**
  * Created by Dmitry Sokolyuk on 05.07.2016.
  */
 public class MainActivityOnClickListner {
 
-    public static List<Shopping> load(MainActivity mainActivity) {
+    public static List<Product> load(MainActivity mainActivity) {
         try{
             return MainActivity.mOpenHelper.shoppingSelect();
         }catch(Exception e){
@@ -65,7 +65,7 @@ public class MainActivityOnClickListner {
 /*        long store_id = ?;
 
         if (!productName.isEmpty() && !shopName.isEmpty()) {
-            Shopping s = new Shopping(-1, productName, shopName, store_id, false);
+            Product s = new Product(-1, productName, shopName, store_id, false);
 
             new Thread(()->{
                 try {
@@ -93,13 +93,13 @@ public class MainActivityOnClickListner {
 //sda+        mainActivity.listViewAdaptor.notifyDataSetChanged();
     }
 
-    public static void edit(Context c, Shopping s, int resCode) {
-        Intent i = new Intent(c, EditPruductsActivity.class);
+    public static void edit(Context c, Product s, int resCode) {
+        Intent i = new Intent(c, EditProductActivity.class);
         i.putExtra("id", s.getId());
         ((Activity)c).startActivityForResult(i, resCode);
     }
 
-    public static void updateThr(Context c, IThrRes i, Shopping s) {
+    public static void updateThr(Context c, IThrRes i, Product s) {
             new Thread(()->{
                 try {
                     MainActivity.mOpenHelper.shoppingUpdate(s);
@@ -111,7 +111,7 @@ public class MainActivityOnClickListner {
             }).start();
     }
 
-    public static void deleteThr(Context c, Shopping s) {
+    public static void deleteThr(Context c, Product s) {
         //sda+((MainActivity)c).listView.startAnimation(AnimationUtils.loadAnimation(c, R.anim.bounce));
         new Thread(()->{
             MainActivity.mOpenHelper.shoppingDelete(s);

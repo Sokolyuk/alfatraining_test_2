@@ -10,10 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import de.sda.einkaufsliste.MainActivity;
-import de.sda.einkaufsliste.R;
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
-import de.sda.einkaufsliste.model.Shopping;
+import de.sda.einkaufsliste.model.Product;
 import de.sda.einkaufsliste.utils.IThrRes;
 
 /**
@@ -58,9 +56,9 @@ public class ListViewAdaptor extends BaseAdapter {
             convertView = layoutInflater.inflate(R.layout.list_view_item_layout, parent, false);
         }
 
-        Shopping s = (Shopping) getItem(position);
-        ((TextView)convertView.findViewById(R.id.idWare)).setText(s.getProductName());
-        ((TextView)convertView.findViewById(R.id.idShop)).setText(s.getShopName());
+        Product s = (Product) getItem(position);
+        ((TextView)convertView.findViewById(R.id.idWare)).setText(s.getName());
+        ((TextView)convertView.findViewById(R.id.idShop)).setText(s.getStore_name());
         ImageView imgNone = (ImageView)convertView.findViewById(R.id.imgNone);
         ImageView imgDone = (ImageView)convertView.findViewById(R.id.imgDone);
         if (s.isDone()) {
@@ -72,7 +70,7 @@ public class ListViewAdaptor extends BaseAdapter {
         }
 
         convertView.setOnClickListener(v->{
-            Shopping _s = (Shopping) getItem(position);
+            Product _s = (Product) getItem(position);
             if(_s != null) _s.setDone(!_s.isDone());
             MainActivityOnClickListner.updateThr(v.getContext(), new IThrRes() {
                 @Override

@@ -3,9 +3,9 @@ package de.sda.einkaufsliste.model;
 /**
  * Created by Dmitry Sokolyuk on 05.07.2016.
  */
-public class Shopping {
-    private String productName;
-    private String shopName;
+public class Product {
+    private String name;
+    private String store_name;
     private long store_id;
     private boolean isDone;
     private long id;
@@ -14,15 +14,15 @@ public class Shopping {
      * convinient constructor
      *
      * @param id
-     * @param productName
-     * @param shopName
+     * @param name
+     * @param store_name
      * @param store_id
      * @param isDone
      */
-    public Shopping(long id, String productName, String shopName, long store_id, boolean isDone) {
+    public Product(long id, String name, String store_name, long store_id, boolean isDone) {
         this.id = id;
-        this.productName = productName.trim();
-        this.shopName = shopName.trim();
+        this.name = name.trim();
+        this.store_name = store_name.trim();
         this.store_id = store_id;
         this.isDone = isDone;
     }
@@ -44,25 +44,25 @@ public class Shopping {
         isDone = done;
     }
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getShopName() {
-        return shopName;
+    public String getStore_name() {
+        return store_name;
     }
 
-    public void setShopName(String shopName) {
-        this.shopName = shopName;
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
     }
 
     @Override
     public String toString() {
-        return productName + "->" + shopName;
+        return name + "->" + store_name;
     }
 
     public long getId() {

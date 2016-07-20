@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.DBOpenHelper;
-import de.sda.einkaufsliste.model.Shopping;
+import de.sda.einkaufsliste.model.Product;
 import de.sda.einkaufsliste.model.Store;
 
 /**
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     //region app data
-    public static List<Shopping> mProducts = new ArrayList<>();
+    public static List<Product> mProducts = new ArrayList<>();
     public static List<Store> mStores = new ArrayList<>();
     public static DBOpenHelper mOpenHelper;
     //endregion
@@ -94,10 +93,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(v->{
             switch (mViewPager.getCurrentItem()){
                 case tabProducts:
-                    startActivity(new Intent(this, EditPruductsActivity.class));
+                    startActivity(new Intent(this, EditProductActivity.class));
                     break;
                 case tabStores:
-                    startActivity(new Intent(this, EditStoresActivity.class));
+                    startActivity(new Intent(this, EditStoreActivity.class));
                     break;
                 default:
             }
@@ -140,25 +139,25 @@ public class MainActivity extends AppCompatActivity {
 */
 
         mProducts = new ArrayList<>();
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
-        mProducts.add(new Shopping(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
+        mProducts.add(new Product(1, "1", "11", 111, true));
 
 
 //        mStores = new ArrayList<>();

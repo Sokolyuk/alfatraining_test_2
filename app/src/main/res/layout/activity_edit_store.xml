@@ -21,35 +21,65 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edit_store_nameWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_store_name"
-                    android:hint="Name" />
+                    android:layout_marginTop="4dp">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edit_store_name"
+                        android:hint="Name" />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edit_store_addressWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_store_address"
-                    android:hint="Address" />
+                    android:layout_marginTop="4dp">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edit_store_address"
+                        android:hint="Address" />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edit_store_longitudeWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_store_longitude"
-                    android:hint="Longitude" />
+                    android:layout_marginTop="4dp">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edit_store_longitude"
+                        android:hint="Longitude" />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edit_store_latitudeWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_store_latitude"
-                    android:hint="Latitude" />
+                    android:layout_marginTop="4dp">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edit_store_latitude"
+                        android:hint="Latitude" />
+                </android.support.design.widget.TextInputLayout>
 
-                <EditText
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/edit_store_altitudeWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/edit_store_altitude"
-                    android:hint="Altitude" />
+                    android:layout_marginTop="4dp">
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/edit_store_altitude"
+                        android:hint="Altitude" />
+                </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             ImageButton

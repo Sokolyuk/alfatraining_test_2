@@ -18,8 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditPruductsActivity"></activity>
-        <activity android:name=".EditStoresActivity"></activity>
+        <activity android:name=".EditProductActivity"></activity>
+        <activity android:name=".EditStoreActivity"></activity>
     </application>
 
 </manifest>

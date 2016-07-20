@@ -9,6 +9,8 @@
     <string name="btnShow">Show</string>
     <string name="txtProductHint1">Einkaufsmarkt eingeben</string>
     <string name="err_Product_invalidate">Produktnamen eingeben</string>
+    <string name="err_field_is_empty">Field is empty</string>
+    <string name="err_incorrect_double_value">Incorrect double value</string>
     <string name="err_Shop_invalidate">Einkausmarktnamen eingeben</string>
 
     <!-- TODO: Remove or change this placeholder text -->
