@@ -16,7 +16,9 @@ public interface DBStruct {
     public final String PRODUCTS_ISDONE = "isdone";
     public final String PRODUCTS_CREATE = "create table products(id integer primary key autoincrement, name text, store_id integer, isdone integer, FOREIGN KEY(store_id) REFERENCES stores(id));";
     public final String PRODUCTS_DROP = "drop table if exists products;";
-    public final String PRODUCTS_SELECT = "select s.id,s.name,s.store_name,t.id as store_id,isdone from products s inner join stores t on s.store = t.id;";
+    public final String PRODUCTS_SELECT = "select p.id,p.name,p.store_id,s.name as store_name,p.isdone from products p inner join stores s on p.store_id = s.id;";
+    public final String PRODUCTS_SELECT_LOJ = "select p.id,p.name,p.store_id,s.name as store_name,p.isdone from products p left outer join stores s on p.store_id = s.id;";
+    public final String PRODUCTS_SELECT_ALL = "select p.id,p.name,p.store_id,'StoreName' as store_name,p.isdone from products p;";
 
     public final String STORES = "stores";
     public final String STORES_ID = "id";

@@ -28,8 +28,8 @@ public class Product {
 
     public Product(Long id, String name, String store_name, Long store_id, boolean isDone) {
         this.id = id;
-        this.name = name.trim();
-        this.store_name = store_name.trim();
+        this.name = name;
+        this.store_name = store_name;
         this.store_id = store_id;
         this.isDone = isDone;
     }
