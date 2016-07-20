@@ -14,7 +14,7 @@ public interface DBStruct {
     public final String SHOPPING_STORE_NAME = "store_name";
     public final String SHOPPING_STORE_ID = "store_id";
     public final String SHOPPING_ISDONE = "isdone";
-    public final String SHOPPING_CREATE = "create table shopping(id integer primary key autoincrement, productname text, store_id integer, isdone integer, FOREIGN KEY(store) REFERENCES stores(id));";
+    public final String SHOPPING_CREATE = "create table shopping(id integer primary key autoincrement, productname text, store_id integer, isdone integer, FOREIGN KEY(store_id) REFERENCES stores(id));";
     public final String SHOPPING_DROP = "drop table if exists shopping;";
     public final String SHOPPING_SELECT = "select s.id,s.productname,s.store_name,t.id as store_id,isdone from shopping s inner join stores t on s.store = t.id;";
 
@@ -24,6 +24,7 @@ public interface DBStruct {
     public final String STORES_ADDRESS = "address";
     public final String STORES_LONGITUDE = "longitude";
     public final String STORES_LATITUDE = "latitude";
-    public final String STORES_CREATE = "create table stores(id integer primary key autoincrement, name text, address text, longitude double, latitude double);";
+    public final String STORES_ALTITUDE = "altitude";
+    public final String STORES_CREATE = "create table stores(id integer primary key autoincrement, name text, address text, longitude double, latitude double, altitude double);";
     public final String STORES_DROP = "drop table if exists stores;";
 }

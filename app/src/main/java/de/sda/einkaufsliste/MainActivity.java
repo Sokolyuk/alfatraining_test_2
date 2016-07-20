@@ -91,13 +91,20 @@ public class MainActivity extends AppCompatActivity {
         //endregion
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+        fab.setOnClickListener(v->{
+            switch (mViewPager.getCurrentItem()){
+                case tabProducts:
+                    startActivity(new Intent(this, EditPruductsActivity.class));
+                    break;
+                case tabStores:
+                    startActivity(new Intent(this, EditStoresActivity.class));
+                    break;
+                default:
             }
         });
+
+
+        //Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
 
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
 
@@ -154,24 +161,12 @@ public class MainActivity extends AppCompatActivity {
         mProducts.add(new Shopping(1, "1", "11", 111, true));
 
 
-        mStores = new ArrayList<>();
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
-        mStores.add(new Store(2, "2", "222", -1, -2));
+//        mStores = new ArrayList<>();
+//        mStores.add(new Store(2L, "2", "222", -1, -2, -3));
+//        mStores.add(new Store(2L, "2", "222", -1, -2, -3));
+//        mStores.add(new Store(2L, "2", "222", -1, -2, -3));
+
+        mStores = mOpenHelper.storesSelect();
 
     }
 
@@ -198,22 +193,27 @@ public class MainActivity extends AppCompatActivity {
             mDrawerLayout.closeDrawers();
             switch(i.getItemId()){
                 case R.id.mn_home:
-                    mViewPager.setCurrentItem(0);
+                    mViewPager.setCurrentItem(tabHome);
                     break;
                 case R.id.mn_products:
-                    mViewPager.setCurrentItem(1);
+                    mViewPager.setCurrentItem(tabProducts);
                     break;
                 case R.id.mn_stores:
-                    mViewPager.setCurrentItem(2);
+                    mViewPager.setCurrentItem(tabStores);
                     break;
                 case R.id.mn_statistic:
-                    mViewPager.setCurrentItem(3);
+                    mViewPager.setCurrentItem(tabStatistic);
                     break;
                 default:
             }
             return true;
         });
     }
+
+    public final int tabHome = 0;
+    public final int tabProducts = 1;
+    public final int tabStores = 2;
+    public final int tabStatistic = 3;
 
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());

@@ -73,6 +73,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         cv.put(DBStruct.STORES_ADDRESS, s.getAddress());
         cv.put(DBStruct.STORES_LONGITUDE, s.getLongitude());
         cv.put(DBStruct.STORES_LATITUDE, s.getLatitude());
+        cv.put(DBStruct.STORES_ALTITUDE, s.getAltitude());
         long _id = db.insert(DBStruct.STORES, null, cv);
         s.setId(_id);
         return _id;
@@ -113,7 +114,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                         String address = cur.getString(cur.getColumnIndex(DBStruct.STORES_ADDRESS));
                         double longitude = cur.getDouble(cur.getColumnIndex(DBStruct.STORES_LONGITUDE));
                         double latitude = cur.getDouble(cur.getColumnIndex(DBStruct.STORES_LATITUDE));
-                        res.add(new Store(id, name, address, longitude, latitude));
+                        double altitude = cur.getDouble(cur.getColumnIndex(DBStruct.STORES_ALTITUDE));
+                        res.add(new Store(id, name, address, longitude, latitude, altitude));
                     }
                 }
             }
@@ -142,6 +144,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         cv.put(DBStruct.STORES_ADDRESS, s.getAddress());
         cv.put(DBStruct.STORES_LONGITUDE, s.getLongitude());
         cv.put(DBStruct.STORES_LATITUDE, s.getLatitude());
+        cv.put(DBStruct.STORES_ALTITUDE, s.getAltitude());
         db.update(DBStruct.STORES, cv, String.format("%s=%s", DBStruct.STORES_ID, String.valueOf(s.getId())), null);
     }
 

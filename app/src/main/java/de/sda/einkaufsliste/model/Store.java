@@ -5,27 +5,46 @@ package de.sda.einkaufsliste.model;
  */
 public class Store {
     //region fields
-    private long id;
+    private Long id;
     private String name;
     private String address;
     private double longitude;
     private double latitude;
+    private double altitude;
+
+    public double getAltitude() {
+        return altitude;
+    }
+
+    public void setAltitude(double altitude) {
+        this.altitude = altitude;
+    }
     //endregion
 
-    public Store(long id, String name, String address, double longitude, double latitude) {
+    public Store(String name, String address, double longitude, double latitude, double altitude) {
+        this.id = null;
+        this.name = name;
+        this.address = address;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.altitude = altitude;
+    }
+
+    public Store(Long id, String name, String address, double longitude, double latitude, double altitude) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.longitude = longitude;
         this.latitude = latitude;
+        this.altitude = altitude;
     }
 
     //region g n s
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
