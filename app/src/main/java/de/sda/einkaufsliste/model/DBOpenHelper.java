@@ -154,7 +154,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         db.delete(DBStruct.SHOPPING, String.format("%s=%s", DBStruct.SHOPPING_ID, String.valueOf(s.getId())), null);
     }
 
-    public synchronized void storesDelete(Shopping s) {
+    public synchronized void storesDelete(Store s) {
         if (s.getId() < 1) return;
         SQLiteDatabase db = getWritableDatabase();
         db.delete(DBStruct.STORES, String.format("%s=%s", DBStruct.STORES_ID, String.valueOf(s.getId())), null);

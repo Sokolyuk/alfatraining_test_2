@@ -38,4 +38,17 @@ public class DBMgr {
         }).start();
     }
 
+    public static void deleteThr(Activity a, Store s, IThrRes i) {
+        new Thread(() -> {
+            try {
+                MainActivity.mOpenHelper.storesDelete(s);
+                if (i != null) a.runOnUiThread(()->{i.isDone();});
+            }catch(Exception e) {
+                e.printStackTrace();
+                if (i != null) a.runOnUiThread(()->{i.isError(e.getMessage());});
+            }
+        }).start();
+        MainActivity.mStores.remove(s);
+    }
+
 }

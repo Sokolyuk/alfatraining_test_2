@@ -1,14 +1,8 @@
 package de.sda.einkaufsliste;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
-import android.media.MediaActionSound;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 
@@ -17,7 +11,7 @@ import de.sda.einkaufsliste.model.Store;
 import de.sda.einkaufsliste.utils.IThrRes;
 
 /**
- * Created by Alfa on 20.07.2016.
+ * Created by Dmitry Sokolyuk on 20.07.2016.
  */
 public class EditStoresActivity extends AppCompatActivity {
 
@@ -128,9 +122,7 @@ public class EditStoresActivity extends AppCompatActivity {
                     }
                 });
             }
-
         });
-
     }
 
     private boolean validate() {

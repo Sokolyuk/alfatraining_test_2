@@ -1,7 +1,7 @@
 package de.sda.einkaufsliste.model;
 
 /**
- * Created by Alfa on 15.07.2016.
+ * Created by Dmitry Sokolyuk on 15.07.2016.
  */
 public class Store {
     //region fields

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import de.sda.einkaufsliste.controller.DBMgr;
 import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.Store;
 import de.sda.einkaufsliste.utils.IThrRes;
@@ -54,29 +56,35 @@ public class FragmentStores extends Fragment {
         menu.setHeaderTitle(String.format("Store: '%s'", s.getName()));
         menu.add(0, v.getId(), 1, "Edit store");
         menu.add(0, v.getId(), 2, "Delete store");
-
-//((AdapterView.AdapterContextMenuInfo) menuInfo).targetView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.rotation));
-
     }
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//sda+        Shopping s = (Shopping)MainActivity.listView.getItemAtPosition(info.position);
+        Store s = (Store)FragmentStores.mStoresListView.getItemAtPosition(info.position);
 
         switch (item.getOrder()){
             case 1:
-//sda+                MainActivityOnClickListner.edit(this, s, 1);
+                Intent i = new Intent(getActivity(), EditStoresActivity.class);
+                i.putExtra("id", s.getId());
+                startActivity(i);
                 break;
             case 2:
-//sda+                MainActivityOnClickListner.deleteThr(this, s);
+                DBMgr.deleteThr(getActivity(), s, new IThrRes() {
+                    @Override
+                    public void isDone() {
+                        mStoresListViewAdaptor.notifyDataSetChanged();
+                        MainActivity.showMess(getContext(), String.format("Store '%s' deleted", s.getName()));
+                    }
+
+                    @Override
+                    public void isError(String mess) {
+                        MainActivity.showMess(getContext(), mess);
+                    }
+                });
                 break;
-//            case 3:
-////sda+                startActivity(new Intent(this, RecyclerViewActivity.class));
-//                break;
             default:
         }
-
 
         return super.onContextItemSelected(item);
     }
