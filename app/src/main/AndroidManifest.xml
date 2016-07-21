@@ -14,12 +14,18 @@
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditProductActivity"></activity>
-        <activity android:name=".EditStoreActivity"></activity>
+        <activity android:name=".EditProductActivity" />
+        <activity android:name=".EditStoreActivity" />
+
+        <service
+            android:name=".service.FileService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

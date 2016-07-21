@@ -193,19 +193,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-System.out.println("MA.onResume");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-System.out.println("MA.onPause");
-    }
-
     public static void showMess(Context context, String mess) {
         LayoutInflater inflater = ((Activity)context).getLayoutInflater();
         View layout = inflater.inflate(R.layout.custom_toast, (ViewGroup)((Activity)context).findViewById(R.id.toast_layout_root));

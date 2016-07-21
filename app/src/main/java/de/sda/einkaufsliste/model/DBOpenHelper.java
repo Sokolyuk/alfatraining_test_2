@@ -83,7 +83,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
         ArrayList<Product> res = new ArrayList<>();
         try{
             SQLiteDatabase d = getReadableDatabase();
-            try(Cursor cur = d.rawQuery(DBStruct.PRODUCTS_SELECT_LOJ, null);){
+            try(Cursor cur = d.rawQuery(DBStruct.PRODUCTS_SELECT, null);){
                 if (cur != null) {
                     while(cur.moveToNext()){
                         long id = cur.getLong(cur.getColumnIndex(DBStruct.PRODUCTS_ID));
