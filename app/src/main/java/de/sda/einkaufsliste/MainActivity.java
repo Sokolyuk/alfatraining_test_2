@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
-import de.sda.einkaufsliste.controller.MainActivityOnClickListner;
 import de.sda.einkaufsliste.model.DBOpenHelper;
 import de.sda.einkaufsliste.model.Product;
 import de.sda.einkaufsliste.model.Store;
@@ -34,13 +33,6 @@ import de.sda.einkaufsliste.model.Store;
  * Created by Dmitry Sokolyuk on 05.07.2016.
  */
 public class MainActivity extends AppCompatActivity {
-
-    //public static EditText product;
-    //public static TextInputLayout productLayout;
-    //public static MaterialBetterSpinner shopSpinner;
-//String[] SPINNERLIST = {"Android Material Design", "Material Design Spinner", "Spinner Using Material Library", "Material Spinner Example"};
-
-
 
     //region app data
     public static List<Product> mProducts = new ArrayList<>();
@@ -103,42 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        //Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
         mLocationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-
-/*
-        product = (EditText)findViewById(R.id.txtProduct);
-        productLayout = (TextInputLayout)findViewById(R.id.productLayout);
-        shopSpinner = (MaterialBetterSpinner)findViewById(R.id.shop);
-
-
-        ((ImageButton)findViewById(R.id.btnAddShopping)).setOnClickListener(v->{
-            if (MainActivityOnClickListner.addThr(MainActivity.this, new IThrRes() {
-                @Override
-                public void onDone() {
-                    ((View)v).clearAnimation();
-                }
-
-                @Override
-                public void onError(String mess) {
-                    showMess(mess);
-                    ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
-                }
-            })) {
-                ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.rotation));
-            }
-
-        });
-
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, SPINNERLIST);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        MaterialBetterSpinner materialDesignSpinner = (MaterialBetterSpinner)findViewById(R.id.shop);
-        materialDesignSpinner.setAdapter(adapter);
-*/
-
 
     }
 
@@ -265,14 +222,4 @@ System.out.println("MA.onPause");
         showMess(this, mess);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch(resultCode){
-            case 1:
-//sda+                this.listView.startAnimation(AnimationUtils.loadAnimation(this, R.anim.bounce));
-                break;
-            default:
-        }
-    }
 }

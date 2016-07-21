@@ -4,12 +4,25 @@ import android.app.Activity;
 import android.support.design.widget.TextInputLayout;
 import android.widget.EditText;
 
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
 import de.sda.einkaufsliste.R;
 
 /**
  * Created by Project1 on 20.07.2016.
  */
 public class Edit {
+
+    public static boolean validateSpinner(Activity a, MaterialBetterSpinner s) {
+        if (s.getText().length() == 0) {
+            s.setError(a.getString(R.string.err_field_is_empty));
+            //edit_store_name.requestFocus();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     public static boolean validateText(Activity a, EditText e, TextInputLayout w) {
         if (e.getText().length() == 0) {
@@ -34,6 +47,7 @@ public class Edit {
         }
         return false;
     }
+
 
 
 }

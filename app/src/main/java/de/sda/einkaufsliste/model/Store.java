@@ -81,9 +81,15 @@ public class Store {
     }
     //endregion
 
-
     @Override
     public String toString() {
-        return "name='" + name + '\'' + ", address='" + address + '\'';
+        return "Store{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", address='" + address + '\'' +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                ", altitude=" + altitude +
+                '}';
     }
 }

@@ -164,7 +164,7 @@ public class FragmentProducts extends Fragment {
                         ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
                     }
                 });
-                ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.rotation));
+                ((View)v).startAnimation(AnimationUtils.loadAnimation(v.getContext(), R.anim.bounce));
             });
 
             convertView.setOnLongClickListener(v->{
