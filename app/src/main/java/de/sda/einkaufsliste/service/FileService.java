@@ -30,7 +30,7 @@ public class FileService extends Service {
         mOpenHelper = new DBOpenHelper(this);
     }
 
-    protected String getFileName(String tableName) {
+/*    protected String getFileName(String tableName) {
         return String.format("%s%s.txt", DBStruct.DB, tableName);
     }
 
@@ -39,10 +39,10 @@ public class FileService extends Service {
         if (stores != null && stores.size() > 0) {
             openFileOutput(getFileName(table));
         }
-    }
+    }*/
 
     protected void backupProductsToFile(List<Product> products) {
-        1
+        //1
     }
 
 }
