@@ -22,5 +22,10 @@
             android:icon="@drawable/met_ic_close"
             android:title="Statistics" />
 
+        <item
+            android:id="@+id/mn_about"
+            android:icon="@drawable/met_ic_close"
+            android:title="About" />
+
     </group>
 </menu>

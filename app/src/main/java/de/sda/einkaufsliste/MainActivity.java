@@ -1,9 +1,12 @@
 package de.sda.einkaufsliste;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.location.LocationManager;
+import android.os.IBinder;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -16,6 +19,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,6 +32,7 @@ import java.util.List;
 import de.sda.einkaufsliste.model.DBOpenHelper;
 import de.sda.einkaufsliste.model.Product;
 import de.sda.einkaufsliste.model.Store;
+import de.sda.einkaufsliste.service.FileService;
 
 /**
  * Created by Dmitry Sokolyuk on 05.07.2016.
@@ -35,16 +40,16 @@ import de.sda.einkaufsliste.model.Store;
 public class MainActivity extends AppCompatActivity {
 
     //region app data
-    public static List<Product> mProducts = new ArrayList<>();
-    public static List<Store> mStores = new ArrayList<>();
-    public static DBOpenHelper mOpenHelper;
+    private static List<Product> mProducts = new ArrayList<>();
+    private static List<Store> mStores = new ArrayList<>();
+    private static DBOpenHelper mOpenHelper;
     //endregion
     //region navigation
     private DrawerLayout mDrawerLayout;
-    public static ViewPager mViewPager;
+    private static ViewPager mViewPager;
     //endregion
-
-    public static LocationManager mLocationManager;
+    private FileService mService;
+    private static LocationManager mLocationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,6 +121,44 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Intent intent = new Intent(this, FileService.class);
+        bindService(intent, mFileServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (mBound) {
+            unbindService(mFileServiceConnection);
+            mBound = false;
+        }
+    }
+
+    boolean mBound = false;
+    /** Defines callbacks for service binding, passed to bindService() */
+    private ServiceConnection mFileServiceConnection = new ServiceConnection() {
+
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            FileService.FileServiceBinder binder = (FileService.FileServiceBinder) service;
+            mService = binder.getService();
+            mBound = true;
+//!!!
+Log.d(MainActivity.class.toString(), "onServiceConnected");
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+            mBound = false;
+//!!!
+Log.d(MainActivity.class.toString(), "onServiceDisconnected");
+        }
+    };
+
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(i->{
             i.setChecked(true);
@@ -132,6 +175,9 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.mn_statistic:
                     mViewPager.setCurrentItem(tabStatistic);
+                    break;
+                case R.id.mn_about:
+                    startActivity(new Intent(this, AboutActivity.class));
                     break;
                 default:
             }
@@ -207,6 +253,26 @@ public class MainActivity extends AppCompatActivity {
 
     public void showMess(String mess) {
         showMess(this, mess);
+    }
+
+    public static LocationManager getLocationManager() {
+        return mLocationManager;
+    }
+
+    public static List<Product> getProducts() {
+        return mProducts;
+    }
+
+    public static List<Store> getStores() {
+        return mStores;
+    }
+
+    public static DBOpenHelper getOpenHelper() {
+        return mOpenHelper;
+    }
+
+    public static ViewPager getViewPager() {
+        return mViewPager;
     }
 
 }

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -22,10 +24,18 @@
         <activity android:name=".EditProductActivity" />
         <activity android:name=".EditStoreActivity" />
 
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/strAboutAndSettings"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <service
             android:name=".service.FileService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true">
+        </service>
+
     </application>
 
 </manifest>

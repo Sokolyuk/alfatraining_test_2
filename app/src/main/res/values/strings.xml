@@ -12,4 +12,9 @@
     <string name="err_field_is_empty">Field is empty</string>
     <string name="err_incorrect_double_value">Incorrect double value</string>
     <string name="err_Shop_invalidate">Einkausmarktnamen eingeben</string>
+    <string name="strSupportCall">Support call</string>
+    <string name="strExportDB">Export DB</string>
+    <string name="strAboutAndSettings">About and settings</string>
+    <string name="strSupportCallNr">tel:8800000000</string>
+
 </resources>
