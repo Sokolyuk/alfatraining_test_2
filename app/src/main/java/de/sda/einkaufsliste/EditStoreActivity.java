@@ -49,7 +49,7 @@ public class EditStoreActivity extends AppCompatActivity {
         if (b != null) {
             long id = b.getLong("id");
 
-            for(Store _s: MainActivity.mStores){
+            for(Store _s: MainActivity.getStores()){
                 if (_s.getId() == id) {
                     store = _s;
                     break;

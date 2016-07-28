@@ -26,7 +26,7 @@ public class AboutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
 
-        OnClickListener clickListener = new OnClickListener();
+        OnClickListener clickListener = new OnClickListener(this);
 
         ((Button)findViewById(R.id.btnDbBackupToSdCard)).setOnClickListener(clickListener);
         ((Button)findViewById(R.id.btnSupportCall)).setOnClickListener(clickListener);

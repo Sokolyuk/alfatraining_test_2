@@ -45,7 +45,7 @@ public class EditProductActivity extends AppCompatActivity {
         if (b != null) {
             long id = b.getLong("id");
 
-            for(Product _s: MainActivity.mProducts){
+            for(Product _s: MainActivity.getProducts()){
                 if (_s.getId() == id) {
                     product = _s;
                     break;
@@ -118,9 +118,9 @@ public class EditProductActivity extends AppCompatActivity {
     private String[] stringArr;
 
     private void setupStoreSpinner() {
-        stringArr = new String[MainActivity.mStores.size()];
-        for(int i = 0; i < MainActivity.mStores.size(); i++){
-            stringArr[i] = MainActivity.mStores.get(i).getName();
+        stringArr = new String[MainActivity.getStores().size()];
+        for(int i = 0; i < MainActivity.getStores().size(); i++){
+            stringArr[i] = MainActivity.getStores().get(i).getName();
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, stringArr);
@@ -132,7 +132,7 @@ public class EditProductActivity extends AppCompatActivity {
         String store_name = edit_product_store.getText().toString();
         if (store_name == null || store_name.isEmpty()) return null;
 
-        for(Store s:  MainActivity.mStores) {
+        for(Store s:  MainActivity.getStores()) {
             if (s.getName().equals(store_name)) {
                 return s;
             }

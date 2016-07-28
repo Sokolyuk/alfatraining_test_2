@@ -29,7 +29,6 @@ public class FragmentHome extends Fragment{
 
     private GPSLocationListener mLocationListener;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +52,8 @@ public class FragmentHome extends Fragment{
                 status.setText("requestPermissions");
             } else {
                 //Berechigung ist eingeräumt
-                ((MainActivity)getActivity()).mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                //((MainActivity)getActivity()).getLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
+                MainActivity.getLocationManager().requestLocationUpdates(LocationManager.GPS_PROVIDER,
                         GPSConsts.MIN_TIME_TO_REFRESH,
                         GPSConsts.MIN_DISTANCE_TO_REFRESH,
                         mLocationListener);
@@ -70,7 +70,8 @@ public class FragmentHome extends Fragment{
         //Location Bestimmung abschalte
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) {
-            ((MainActivity)getActivity()).mLocationManager.removeUpdates(mLocationListener);
+            //((MainActivity)getActivity()).mLocationManager.removeUpdates(mLocationListener);
+            MainActivity.getLocationManager().removeUpdates(mLocationListener);
         }
     }
 

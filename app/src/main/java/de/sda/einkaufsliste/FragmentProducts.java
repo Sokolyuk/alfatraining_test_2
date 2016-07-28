@@ -107,19 +107,19 @@ public class FragmentProducts extends Fragment {
 
         @Override
         public int getCount() {
-            if (MainActivity.mProducts == null) {
+            if (MainActivity.getProducts() == null) {
                 return 0;
             } else {
-                return MainActivity.mProducts.size();
+                return MainActivity.getProducts().size();
             }
         }
 
         @Override
         public Object getItem(int position) {
-            if (MainActivity.mProducts == null) {
+            if (MainActivity.getProducts() == null) {
                 return null;
             } else {
-                return MainActivity.mProducts.get(position);
+                return MainActivity.getProducts().get(position);
             }
 
         }

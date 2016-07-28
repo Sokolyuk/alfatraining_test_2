@@ -15,9 +15,9 @@ public class DBMgr {
     public static void addStoreThr(Activity a, Store s, IThrRes i) {
         new Thread(()->{
             try {
-                MainActivity.mOpenHelper.storesInsert(s);
+                MainActivity.getOpenHelper().storesInsert(s);
                 a.runOnUiThread(()->{
-                    MainActivity.mStores.add(s);
+                    MainActivity.getStores().add(s);
                     if (i != null) i.onDone();
                 });
             }catch(Exception e) {
@@ -30,7 +30,7 @@ public class DBMgr {
     public static void updateStoreThr(Activity a, Store s, IThrRes i) {
         new Thread(()->{
             try {
-                MainActivity.mOpenHelper.storesUpdate(s);
+                MainActivity.getOpenHelper().storesUpdate(s);
                 if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
@@ -42,22 +42,22 @@ public class DBMgr {
     public static void deleteStoreThr(Activity a, Store s, IThrRes i) {
         new Thread(() -> {
             try {
-                MainActivity.mOpenHelper.storesDelete(s);
+                MainActivity.getOpenHelper().storesDelete(s);
                 if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
                 if (i != null) a.runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
-        MainActivity.mStores.remove(s);
+        MainActivity.getStores().remove(s);
     }
 
     public static void addProductThr(Activity a, Product p, IThrRes i) {
         new Thread(()->{
             try {
-                MainActivity.mOpenHelper.productInsert(p);
+                MainActivity.getOpenHelper().productInsert(p);
                 a.runOnUiThread(()->{
-                    MainActivity.mProducts.add(p);
+                    MainActivity.getProducts().add(p);
                     if (i != null) i.onDone();
                 });
             }catch(Exception e) {
@@ -70,7 +70,7 @@ public class DBMgr {
     public static void updateProductThr(Activity a, Product p, IThrRes i) {
         new Thread(()->{
             try {
-                MainActivity.mOpenHelper.productUpdate(p);
+                MainActivity.getOpenHelper().productUpdate(p);
                 if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
@@ -82,14 +82,14 @@ public class DBMgr {
     public static void deleteProductThr(Activity a, Product p, IThrRes i) {
         new Thread(() -> {
             try {
-                MainActivity.mOpenHelper.productDelete(p);
+                MainActivity.getOpenHelper().productDelete(p);
                 if (i != null) a.runOnUiThread(()->{i.onDone();});
             }catch(Exception e) {
                 e.printStackTrace();
                 if (i != null) a.runOnUiThread(()->{i.onError(e.getMessage());});
             }
         }).start();
-        MainActivity.mProducts.remove(p);
+        MainActivity.getProducts().remove(p);
     }
 
 }

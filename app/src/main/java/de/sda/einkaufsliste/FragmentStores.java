@@ -102,19 +102,19 @@ public class FragmentStores extends Fragment {
 
         @Override
         public int getCount() {
-            if (MainActivity.mStores == null) {
+            if (MainActivity.getStores() == null) {
                 return 0;
             } else {
-                return MainActivity.mStores.size();
+                return MainActivity.getStores().size();
             }
         }
 
         @Override
         public Object getItem(int position) {
-            if (MainActivity.mStores == null) {
+            if (MainActivity.getStores() == null) {
                 return null;
             } else {
-                return MainActivity.mStores.get(position);
+                return MainActivity.getStores().get(position);
             }
 
         }
